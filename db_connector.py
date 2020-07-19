@@ -1,10 +1,22 @@
-import mysql.connector
+from json import load
+from mysql import connector
 
-def connection():
-    conn = mysql.connector.connect (
-        host = "",
-        user = "",
-        password = ""
+def connection(path_to_config=None):
+    """
+    Makes the connection to DB and returns the connection object.
+    """
+
+    if not path_to_config:
+        path_to_config = 'config.json'
+
+    fp = open(path_to_config)
+    config = load(fp)
+    fp.close()
+
+    conn = connector.connect (
+        host = config['host'],
+        user = config['user'],
+        password = config['password']
     )
 
     return conn
