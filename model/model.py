@@ -6,7 +6,7 @@ app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
 
-@app.route('data/', methods=['GET'])
+@app.route('/', methods=['GET'])
 def home():
     return "Project Panoptic's Data"
 
