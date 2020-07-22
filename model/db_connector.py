@@ -7,7 +7,7 @@ def connection(path_to_config=None):
     """
 
     if not path_to_config:
-        path_to_config = 'config.json'
+        path_to_config = 'model/config.json'
 
     fp = open(path_to_config)
     config = load(fp)

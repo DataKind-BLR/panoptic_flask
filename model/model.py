@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import flask
 import utils
 from flask import request, jsonify
@@ -7,11 +6,11 @@ app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
 
-@app.route('/', methods=['GET'])
+@app.route('data/', methods=['GET'])
 def home():
-    return "Project Panoptic"
+    return "Project Panoptic's Data"
 
-@app.route('/single_frt', methods=['GET'])
+@app.route('/data/single_frt', methods=['GET'])
 def single_frt():
 
     # Check if state was provided as part of the URL.
@@ -30,7 +29,7 @@ def single_frt():
 
     return jsonify(results)
 
-@app.route('/total_frts', methods=['GET'])
+@app.route('/data/total_frts', methods=['GET'])
 def total_frt():
 
     # Check if state was provided as part of the URL.
