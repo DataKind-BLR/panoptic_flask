@@ -60,7 +60,7 @@ def generate_map():
     # Create a white image of 4 pixels, and embed it in a url.
     white_tile = branca.utilities.image_to_url([[1, 1], [1, 1]])
 
-    f = folium.Figure(width=700, height=850)
+    f = folium.Figure(width=600, height=700)
     m = folium.Map([23.53, 78.3], maxZoom=6,minZoom=4.8,zoom_control=True,zoom_start=5,
                 scrollWheelZoom=True,maxBounds=[[40, 68],[6, 97]],tiles=white_tile,attr='white tile',
                 dragging=True).add_to(f)
@@ -117,5 +117,5 @@ def generate_map():
 
     f.save('./templates/map_plot.html')
     #html_string = f.get_root().render()
-    html_string = f._repr_html_()
+    html_string = f.get_root().render()
     return html_string

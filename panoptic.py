@@ -9,7 +9,7 @@ app = Flask(__name__)
 def root():
     generate_map()
 
-    return render_template('home.html')
+    return render_template('home.html',iframe_map = generate_map())
 
 
 @app.route('/map')
