@@ -1,0 +1,5 @@
+Flask==1.1.2
+mysql-connector-python==8.0.20
+mock==2.0.0
+pandas==0.20.3
+numpy==1.18.5
