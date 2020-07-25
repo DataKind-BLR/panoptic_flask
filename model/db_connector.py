@@ -1,9 +1,15 @@
+"""DB connector for accesing database"""
 from json import load
 from mysql import connector
 
 def connection(path_to_config=None):
     """
     Makes the connection to DB and returns the connection object.
+
+    Arguments:
+        path_to_config {str} -- Path to the config file which contatins credentials
+    Returns:
+        {mysql connector} -- MYSQL connector object
     """
 
     if not path_to_config:
@@ -22,6 +28,15 @@ def connection(path_to_config=None):
     return conn
 
 def execute_select_query(query:str):
+    """
+    Executes the SELECT query on MYSQL database
+
+    Arguments:
+        query {str} -- Query to execute
+    Returns:
+        {list} -- Columns returned by the query
+        {list} -- Data returned by the query
+    """
 
     conn = connection()
 

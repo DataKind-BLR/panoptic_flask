@@ -1,13 +1,18 @@
-from db_connector import execute_select_query
+"""Utilities function for processing data"""
+from model.db_connector import execute_select_query
 
 def get_frt(state:str):
     """
-    Accepts state
+    Get FRT details for a single state.
 
-    Returns headers of the columns and data in list
+    Arguments:
+        state {str} -- Name of the state.
+    Returns:
+        {JSON} -- Returns headers of the columns and data in list
     """
+
     if not state:
-        return None, None
+        return None
 
     elif state == 'India':
         query = """
@@ -22,7 +27,9 @@ def get_frt(state:str):
                 , frt.authority AS authority
             FROM
                 panoptic.frt AS frt
-        """
+        """.format(
+            state=state
+        )
 
     else:
         query = """
@@ -51,17 +58,27 @@ def get_frt(state:str):
             state=state
         )
 
-    return execute_select_query(query)
+    results = []
+
+    headers, data = execute_select_query(query)
+
+    while data:
+        results.append(dict(zip(headers, data.pop())))
+
+    return results
 
 
 def get_total_frt(state:str):
     """
-    Accepts state name
+    Get total number of FRTs for a single state.
 
-    Returns total number of FRTs in the state mentioned
+    Arguments:
+        state {str} -- Name of the state.
+    Returns:
+        {JSON} -- Returns headers of the columns and data in list
     """
     if not state:
-        return None, None
+        return None
 
     elif state == 'India':
         query = """
@@ -93,4 +110,9 @@ def get_total_frt(state:str):
             state=state
         )
 
-    return execute_select_query(query)
+    headers, data = execute_select_query(query)
+
+    while data:
+        result = dict(zip(headers, data.pop()))
+
+    return result
