@@ -1,14 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title></title>
-</head>
-<body>
+{% include "head.html" %}
+{% block body %}
+{% include "page_nav.html" %}
+<!-- DO NOT ADD ANYTHING ABOVE THIS LINE -->
 
-<h1>{{state_content.state_name}}</h1>
-  {% for frt in state_content.rts %}
-    <ul>
-      <li></li>
+<div class="container">
+  <h1>State Level FRT</h1>
+</div>
 
-</body>
-</html>
+<!-- DO NOT ADD ANYTHING BELOW THIS LINE -->
+{% endblock %}
+{% include "foot.html" %}
