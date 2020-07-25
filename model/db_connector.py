@@ -1,28 +1,20 @@
 """DB connector for accesing database"""
+import os
 from json import load
 from mysql import connector
 
-def connection(path_to_config=None):
+def connection():
     """
     Makes the connection to DB and returns the connection object.
 
-    Arguments:
-        path_to_config {str} -- Path to the config file which contatins credentials
     Returns:
         {mysql connector} -- MYSQL connector object
     """
 
-    if not path_to_config:
-        path_to_config = 'model/config.json'
-
-    fp = open(path_to_config)
-    config = load(fp)
-    fp.close()
-
     conn = connector.connect (
-        host = config['host'],
-        user = config['user'],
-        password = config['password']
+        host = os.environ.get('MYSQL_HOST'),
+        user = os.environ.get('MYSQL_USERNAME'),
+        password = os.environ.get('MYSQL_PASSWORD')
     )
 
     return conn
