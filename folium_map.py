@@ -126,7 +126,7 @@ def generate_map():
         folium.Popup(iframe, max_width=500).add_to(gs)
         gs.add_to(g)
 
-    f.save('./templates/map_plot.html')
+    # f.save('./templates/map_plot.html')
     #html_string = f.get_root().render()
     html_string = f.get_root().render()
     return html_string
