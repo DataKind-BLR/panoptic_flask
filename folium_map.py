@@ -52,7 +52,7 @@ def generate_map():
     gdf['Place'][14] = 'KSR Bengaluru Station'
     gdf['Purpose'][14] = 'Security/ Surveillance'
 
-    gdf.to_file("india_gdf.json", driver="GeoJSON")
+    gdf.to_file("./shape_files/india_gdf.json", driver="GeoJSON")
     
     with open('./shape_files/india_gdf.json') as response:
         india_gdf = json.load(response)
