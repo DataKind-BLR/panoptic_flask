@@ -4,7 +4,7 @@ import folium
 import branca
 import requests
 import json
-
+from folium import IFrame
 from folium.features import GeoJson, GeoJsonTooltip, GeoJsonPopup
 
 def generate_map():
@@ -60,10 +60,10 @@ def generate_map():
     # Create a white image of 4 pixels, and embed it in a url.
     white_tile = branca.utilities.image_to_url([[1, 1], [1, 1]])
 
-    f = folium.Figure(width=600, height=700)
-    m = folium.Map([23.53, 78.3], maxZoom=6,minZoom=4.8,zoom_control=True,zoom_start=5,
+    f = folium.Figure() #width='container', height=700
+    m = folium.Map([23.53, 78.3], maxZoom=5,minZoom=4.0,zoom_control=True,zoom_start=4,
                 scrollWheelZoom=True,maxBounds=[[40, 68],[6, 97]],tiles=white_tile,attr='white tile',
-                dragging=True).add_to(f)
+                dragging=True,width = '100%',height = '100%').add_to(f)
 
     #folium.GeoJson(india).add_to(m)
 
@@ -96,24 +96,35 @@ def generate_map():
         data=gdf,
         columns=['st_nm','Count of FRT Systems'],
         key_on='properties.st_nm',
-        fill_color='YlGnBu',
+        fill_color='Set3',
         fill_opacity=0.7,
         line_opacity=0.4,
         legend_name='FRT Systems',
         highlight=True,
         
     ).add_to(m)
+    for key in g._children:
+        if key.startswith('color_map'):
+            del(g._children[key])
 
-    folium.GeoJson(
-        india_gdf,
-        style_function=lambda feature: {
-            'fillColor': '#ffff00',
-            'color': 'black',
-            'weight': 0.1,
-            'dashArray': '5, 5'
-        },
-        #tooltip=tooltip,
-        popup=popup).add_to(g)
+    for i in range(len(india_gdf['features'])):
+        gs = folium.GeoJson(india_gdf['features'][i],
+                        style_function=lambda feature: {
+                            'fillColor': '#ffff00',
+                            'color': 'black',
+                            'weight': 0.1,
+                            'dashArray': '5, 5'
+                        })
+        state = india_gdf['features'][i]['properties']['st_nm']
+        auth = india_gdf['features'][i]['properties']['Authority']
+        html = f'''
+        <h1>Name: </h1>{state}<br />\
+        <h2>Location: </h2>{auth}<br />\
+        <a href="about:blank">More Details</a>
+        '''
+        iframe = IFrame(html, width=250, height=200)
+        folium.Popup(iframe, max_width=500).add_to(gs)
+        gs.add_to(g)
 
     f.save('./templates/map_plot.html')
     #html_string = f.get_root().render()
