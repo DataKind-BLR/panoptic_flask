@@ -1,48 +1,48 @@
-import flask
-import utils
-from flask import request, jsonify
+"""Model file for accessing the base functions"""
+from model import utils
 
-app = flask.Flask(__name__)
-app.config["DEBUG"] = True
+def single_frt(state:str = None):
+    """
+    Get FRT details for a single state.
 
+    Arguments:
+        state {str} -- Name of the state. Defaults to India
+    Returns:
+        {list} -- List of dictionary of the results
+        {
+            "state": "",
+            "name": "",
+            "status": "",
+            "purpose": "",
+            "reported_use": "",
+            "rti_date": "",
+            "financial_outlay": "",
+            "authority": ""
+        }
+    """
 
-@app.route('data/', methods=['GET'])
-def home():
-    return "Project Panoptic's Data"
-
-@app.route('/data/single_frt', methods=['GET'])
-def single_frt():
-
-    # Check if state was provided as part of the URL.
-    if 'state' in request.args:
-        state = request.args['state']
-    else:
+    # Check if state was provided as a parameter.
+    if 'state' == None:
         state = 'India'
 
-    # Create an empty list for our results
-    results = []
+    return utils.get_frt(state=state)
 
-    headers, data = utils.get_frt(state=state)
+def total_frt(state:str = None):
+    """
+    Get total number of FRTs in a state.
 
-    while data:
-        results.append(dict(zip(headers, data.pop())))
-
-    return jsonify(results)
-
-@app.route('/data/total_frts', methods=['GET'])
-def total_frt():
+    Arguments:
+        state {str} -- Name of the state. Defaults to India
+    Returns:
+        {dict} -- Dictionary of the result
+        {
+            "state": "",
+            "count": ""
+        }
+    """
 
     # Check if state was provided as part of the URL.
-    if 'state' in request.args:
-        state = request.args['state']
-    else:
+    if 'state' == None:
         state = 'India'
 
-    headers, data = utils.get_total_frt(state=state)
-
-    while data:
-        results = dict(zip(headers, data.pop()))
-
-    return jsonify(results)
-
-app.run()
+    return utils.get_total_frt(state=state)
