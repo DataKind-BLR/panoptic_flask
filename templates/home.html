@@ -69,8 +69,21 @@
     <div class="row text-center">
       <div class="output_html rendered_html output_subarea output_execute_result">
         <!-- <div class="embed-responsive embed-responsive-16by9"> -->
-          <iframe src="about:blank" width="800" height="950" style="border:none !important;" data-html={{ iframe_map }} onload="this.contentDocument.open();this.contentDocument.write(atob(this.getAttribute('data-html')));this.contentDocument.close();" "allowfullscreen" "webkitallowfullscreen" "mozallowfullscreen"></iframe>
+          <!-- <iframe src="about:blank" width="800" height="950" style="border:none !important;" data-html={{ iframe_map }} onload="this.contentDocument.open();this.contentDocument.write(atob(this.getAttribute('data-html')));this.contentDocument.close();" "allowfullscreen" "webkitallowfullscreen" "mozallowfullscreen"></iframe> -->
         <!-- </div> -->
+
+        <div class="custom-container">
+          <iframe class="folium-iframe", src="/map" width="600" height="700" style="border:none !important;"></iframe>
+        </div>
+        <!-- {{ iframe_map|safe }} -->
+
+
+        <!-- {% include 'map_plot.html' %} -->
+        <!-- <div class="output_html rendered_html output_subarea output_execute_result">
+          <iframe src="about:blank" width="800" height="950"style="border:none !important;" data-html={{ iframe_map }} onload="this.contentDocument.open();this.contentDocument.write(atob(this.getAttribute('data-html')));this.contentDocument.close();" "allowfullscreen" "webkitallowfullscreen" "mozallowfullscreen"></iframe>
+        </div> -->
+
+
       </div>
     </div>
   </div>
