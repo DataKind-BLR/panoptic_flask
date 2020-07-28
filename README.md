@@ -1,3 +1,3 @@
-# panoptic_flask
+# Panoptic
 
 Flask app for panoptic

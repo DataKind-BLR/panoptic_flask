@@ -1,7 +1,7 @@
 """Model file for accessing the base functions"""
 from model import utils
 
-def single_frt(state:str = None):
+def get_single_state_frt(state:str = None):
     """
     Get FRT details for a single state.
 
@@ -25,9 +25,9 @@ def single_frt(state:str = None):
     if 'state' == None:
         state = 'India'
 
-    return utils.get_frt(state=state)
+    return utils.get_state_frt(state=state)
 
-def total_frt(state:str = None):
+def get_state_total_frt(state:str = None):
     """
     Get total number of FRTs in a state.
 

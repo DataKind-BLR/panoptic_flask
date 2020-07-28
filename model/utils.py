@@ -1,7 +1,8 @@
 """Utilities function for processing data"""
-from model.db_connector import execute_select_query
+from model.db_helper import execute_select_query
 
-def get_frt(state:str):
+
+def get_state_frt(state:str):
     """
     Get FRT details for a single state.
 
