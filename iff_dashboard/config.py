@@ -2,11 +2,11 @@ import mysql.connector
 
 scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
-credential_json_path = 'datakind-74b1023b01aa.json'
+credential_json_path = 'datakind.json'
 source = 'Datakind -IFF dashboard'
 
-DB_USER = 'datakind'
-DB_PASSWORD = 'Datakind@123'
+DB_USER = 'root'
+DB_PASSWORD = 'root'
 ACCEPT_MESSAGE = 'Accepted'
 REJECT_MESSAGE = 'Rejected'
 SUBMIT_MESSAGE = 'Submit'

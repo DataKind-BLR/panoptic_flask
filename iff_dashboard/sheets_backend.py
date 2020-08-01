@@ -1,5 +1,4 @@
 from config import ACCEPT_MESSAGE, REJECT_MESSAGE, SUBMIT_MESSAGE
-from db_utils import insert_to_location
 from frt import Frt
 from gsheets_utils import get_spreadsheet
 from gspread import Cell
@@ -45,7 +44,6 @@ def update_location_table(spreadsheet):
     location = spreadsheet.get_worksheet(2)
     update_list = location.col_values(1)
     update_list = update_list[1:]
-    i = 0
     for _id, state in enumerate(update_list, 1):
         location = Location(_id, state)
         location.insert_to_location()
@@ -55,6 +53,6 @@ if __name__ == '__main__':
     spreadsheet = get_spreadsheet()
     print('updating tech partners')
     update_tech_partner(spreadsheet)
-    # update_location_table(spreadsheet)
+    update_location_table(spreadsheet)
     print('updating frt sheet')
     update_frts(spreadsheet)

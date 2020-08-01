@@ -1,5 +1,5 @@
 from gsheets_utils import random_with_N_digits
-from db_utils import conn
+from config import conn
 
 
 class TechPartner():
@@ -10,7 +10,7 @@ class TechPartner():
         self.website = website
         self.upload_status = upload_status
 
-    def insert_to_tech_partners(self, id_, technology_partner, website):
+    def insert_to_tech_partners(self):
 
         query = ''' INSERT INTO
                         panoptic.technology_partner (

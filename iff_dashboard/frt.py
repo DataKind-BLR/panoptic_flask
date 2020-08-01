@@ -1,5 +1,5 @@
 from gsheets_utils import random_with_N_digits
-from db_utils import conn
+from config import conn
 
 
 class Frt:
@@ -95,21 +95,39 @@ class Frt:
                                     storage_duration, \
                                     legal_basis, tender_publication_date,rti_date,reported_use)\
                         VALUES\
-                        ({},'{}','{}','{}',{},'{}','{}','{}','{}','{}', '{}','{}', '{}','{}') '''.format(self.id,
-                                                                                                         self.authority,
-                                                                                                         self.face_recognition_system,
-                                                                                                         self.purpose,
-                                                                                                         self.technology_partner__key,
-                                                                                                         self.status,
-                                                                                                         self.linked_databases,
-                                                                                                         self.financial_outlay,
-                                                                                                         self.prescribed_technical_standards,
-                                                                                                         self.storage_duration,
-                                                                                                         self.legal_basis,
-                                                                                                         self.tender_publication_date,
-                                                                                                         self.rti_date,
-                                                                                                         self.reported_use_date
-                                                                                                         )
+                        	({id},'{authority}','{face_recognition_system}','{purpose}',{technology_partner__key}, \
+                        	'{status}','{linked_databases}','{financial_outlay}','{prescribed_technical_standards}', \
+                        	'{storage_duration}', '{legal_basis}','{tender_publication_date}', '{rti_date}','{reported_use}')
+                         ON DUPLICATE KEY UPDATE
+                            id = {id},
+                            authority = '{authority}',
+                            face_recognition_system = '{face_recognition_system}',
+                            purpose = '{purpose}',
+                            technology_partner__key = {technology_partner__key},
+                            status = '{status}',
+                            linked_databases = '{linked_databases}',
+                            financial_outlay = '{financial_outlay}',
+                            prescribed_technical_standards = '{prescribed_technical_standards}',
+                            storage_duration = '{storage_duration}',
+                            legal_basis = '{legal_basis}',
+                            tender_publication_date = '{tender_publication_date}',
+                            rti_date = '{rti_date}',
+                            reported_use = '{reported_use}' 
+                         '''.format_map({'id': self.id,
+                                     'authority': self.authority,
+                                     'face_recognition_system': self.face_recognition_system,
+                                     'purpose': self.purpose,
+                                     'technology_partner__key': self.technology_partner__key,
+                                     'status': self.status,
+                                     'linked_databases': self.linked_databases,
+                                     'financial_outlay': self.financial_outlay,
+                                     'prescribed_technical_standards': self.prescribed_technical_standards,
+                                     'storage_duration': self.storage_duration,
+                                     'legal_basis': self.legal_basis,
+                                     'tender_publication_date': self.tender_publication_date,
+                                     'rti_date': self.rti_date,
+                                     'reported_use': self.reported_use_date
+                                     })
 
         insert_cursor = conn.cursor()
         insert_cursor.execute(query)
