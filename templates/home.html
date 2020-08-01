@@ -27,12 +27,15 @@
   <div class="container">
     <div class="text-center">
       <h2 class="section-heading text-uppercase">What are FRT Systems?</h2>
-      <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h3>
+    </div>
+    <div class="row">
+      <p>As Smriti Parsheera explains in her recent paper, the process of FRT can be summarised in the following steps:</p>
+      <ul>
+        <li>Detection of face in an image and/or video. For instance, phone cameras apply this feature when they auto-focus on a face while capturing a photo.</li>
+        <li>Extraction of particular features from the detected image.</li>
+        <li>Recognition which results in either identification or verification of an individual.</li>
+        <li>Identification happens when FRT is used to identify an individual from a pool of many people. This kind of 1:many FRT based identification is typically used for security and surveillance purposes. Verification, on the other hand, occurs when an image is compared to another image from an existing database in order to verify that the individual is who he/she claims to be, i.e., authentication of identity on a 1:1 basis.</li>
+      </ul>
     </div>
   </div>
 </section>
@@ -66,14 +69,38 @@
         <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
       </div>
     </div>
-    <div class="row text-center">
-
-      <div class="custom-container">
-        <!-- Option 1 - Rending from another html -->
-        <iframe class="folium-iframe" src="/map" width="600" height="700" style="border:none !important;"></iframe>
-        
-        <!-- Option 2 - Rending from generated string -->
-        <!-- <iframe class="folium-iframe" src="about:blank" width="600" height="700" style="border:none !important;" data-html={{ iframe_map }} onload="this.contentDocument.open();this.contentDocument.write(atob(this.getAttribute('data-html')));this.contentDocument.close();" "allowfullscreen" "webkitallowfullscreen" "mozallowfullscreen"></iframe> -->
+    <div class="row text-center mt-4">
+      <div class="col-md-6">
+        <div class="custom-container">
+          <!-- Option 1 - Rending from another html -->
+          <iframe class="folium-iframe" src="/map" style="border:none !important;"></iframe>
+          <!-- Option 2 - Rending from generated string -->
+          <!-- <iframe class="folium-iframe" src="about:blank" width="600" height="700" style="border:none !important;" data-html={{ iframe_map }} onload="this.contentDocument.open();this.contentDocument.write(atob(this.getAttribute('data-html')));this.contentDocument.close();" "allowfullscreen" "webkitallowfullscreen" "mozallowfullscreen"></iframe> -->
+        </div>
+      </div>
+      <div class="col-md-6">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">State</th>
+              <th scope="col"># of FRTs</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Karnataka</th>
+              <td>12</td>
+            </tr>
+            <tr>
+              <th scope="row">Maharashtra</th>
+              <td>8</td>
+            </tr>
+            <tr>
+              <th scope="row">Kerala</th>
+              <td>10</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -84,7 +111,19 @@
   <div class="container">
     <div class="text-center">
       <h2 class="section-heading text-uppercase">Submit an FRT</h2>
-      <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+      <div class="row text-center">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <span class="fa-stack fa-4x">
+            <span>34</span>
+          </span>
+          <p class="text-muted">
+            FRTs have been submitted by people like you <br />
+            Help us identify FRT systems in your vicinity
+          </p>
+        </div>
+        <div class="col-md-4"></div>
+      </div>
     </div>
     <div class="text-center">
       <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="/submit_frt">Submit an FRT</a>
@@ -99,12 +138,8 @@
       <h2 class="section-heading text-uppercase">Case Studies</h2>
     </div>
     <div class="text-center">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      <p>
+        Case studies will be in an explainer format providing context to the system with the help of a timeline
       </p>
       <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="/case_studies">View Case Studies</a>
     </div>

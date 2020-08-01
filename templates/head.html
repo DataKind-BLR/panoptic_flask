@@ -17,23 +17,4 @@
   <!-- Core theme CSS (includes Bootstrap)-->
   <link href="{{ url_for('static', filename='node_modules/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet" />
   <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet" />
-  <style>
-    .custom-container {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    padding-top: 150%; /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
-  }
-
-  /* Then style the iframe to fit in the container div with full height and width */
-  .folium-iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    width: 100vw;
-    height: 100vh;
-  }
-  </style>
 </head>
