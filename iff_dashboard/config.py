@@ -5,8 +5,8 @@ scope = ['https://spreadsheets.google.com/feeds',
 credential_json_path = 'datakind.json'
 source = 'Datakind -IFF dashboard'
 
-DB_USER = 'root'
-DB_PASSWORD = 'root'
+DB_USER = 'datakind'
+DB_PASSWORD = 'Datakind@123'
 ACCEPT_MESSAGE = 'Accepted'
 REJECT_MESSAGE = 'Rejected'
 SUBMIT_MESSAGE = 'Submit'

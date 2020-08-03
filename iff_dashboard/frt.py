@@ -1,5 +1,6 @@
 from gsheets_utils import random_with_N_digits
 from config import conn
+import re
 
 
 class Frt:
@@ -31,7 +32,7 @@ class Frt:
         self.authority = authority
         self.face_recognition_system = face_recognition_system
         self.jurisdiction = jurisdiction
-        self.states = states
+        self.states = [state for state in re.sub(' ', '', states).split(',')]
         self.upload_status = upload_status
         self.purpose = purpose
         self.technology_partner = technology_partner
@@ -69,17 +70,43 @@ class Frt:
         cursor.close()
         return state
 
-    def update_frt_place_table(self):
-        insert_cursor = conn.cursor()
+    def get_state_ids(self):
+        cursor = conn.cursor()
+        cursor.execute(
+            "select place__key from panoptic.frt_place_link where frt__key  = {} ".format(self.id))
+        result = cursor.fetchall()
+        cursor.close()
+        state_ids = set([row[0] for row in result])
+        return state_ids
 
-        for state in self.states.split(','):
-            place_key = self.get_place_id(state)
-            query = ''' INSERT INTO panoptic.frt_place_link (frt__key, place__key) \
+    def add_place_id(self, place_key):
+        insert_cursor = conn.cursor()
+        query = ''' INSERT INTO panoptic.frt_place_link (frt__key, place__key) \
                             VALUES ({frt_key},{place_key})'''.format_map({
-                'frt_key': self.id, 'place_key': place_key})
-            insert_cursor.execute(query)
-            conn.commit()
+            'frt_key': self.id, 'place_key': place_key})
+        insert_cursor.execute(query)
+        conn.commit()
         insert_cursor.close()
+
+    def delete_place_id(self, place_key):
+        insert_cursor = conn.cursor()
+        query = ''' DELETE FROM  panoptic.frt_place_link \
+                            WHERE frt__key = {frt_key} and place__key = {place_key} '''.format_map({
+            'frt_key': self.id, 'place_key': place_key})
+        insert_cursor.execute(query)
+        conn.commit()
+        insert_cursor.close()
+
+    def update_frt_place_table(self):
+        db_state_ids = self.get_state_ids()
+        gsheets_states = set([self.get_place_id(state)
+                              for state in self.states])
+
+        for place_id in gsheets_states - db_state_ids:
+            self.add_place_id(place_id)
+
+        for place_id in db_state_ids - gsheets_states:
+            self.delete_place_id(place_id)
 
     def insert_to_frt_table(self):
         query = '''INSERT INTO \
@@ -114,20 +141,20 @@ class Frt:
                             rti_date = '{rti_date}',
                             reported_use = '{reported_use}' 
                          '''.format_map({'id': self.id,
-                                     'authority': self.authority,
-                                     'face_recognition_system': self.face_recognition_system,
-                                     'purpose': self.purpose,
-                                     'technology_partner__key': self.technology_partner__key,
-                                     'status': self.status,
-                                     'linked_databases': self.linked_databases,
-                                     'financial_outlay': self.financial_outlay,
-                                     'prescribed_technical_standards': self.prescribed_technical_standards,
-                                     'storage_duration': self.storage_duration,
-                                     'legal_basis': self.legal_basis,
-                                     'tender_publication_date': self.tender_publication_date,
-                                     'rti_date': self.rti_date,
-                                     'reported_use': self.reported_use_date
-                                     })
+                                         'authority': self.authority,
+                                         'face_recognition_system': self.face_recognition_system,
+                                         'purpose': self.purpose,
+                                         'technology_partner__key': self.technology_partner__key,
+                                         'status': self.status,
+                                         'linked_databases': self.linked_databases,
+                                         'financial_outlay': self.financial_outlay,
+                                         'prescribed_technical_standards': self.prescribed_technical_standards,
+                                         'storage_duration': self.storage_duration,
+                                         'legal_basis': self.legal_basis,
+                                         'tender_publication_date': self.tender_publication_date,
+                                         'rti_date': self.rti_date,
+                                         'reported_use': self.reported_use_date
+                                         })
 
         insert_cursor = conn.cursor()
         insert_cursor.execute(query)
