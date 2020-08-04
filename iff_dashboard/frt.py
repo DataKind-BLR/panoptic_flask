@@ -1,0 +1,162 @@
+from gsheets_utils import random_with_N_digits
+from config import conn
+import re
+
+
+class Frt:
+
+    def __init__(self,
+                 _id,
+                 authority,
+                 face_recognition_system,
+                 jurisdiction,
+                 states,
+                 upload_status,
+                 purpose,
+                 technology_partner,
+                 tender_publication_date,
+                 reported_use_date,
+                 status,
+                 linked_databases,
+                 financial_outlay,
+                 prescribed_technical_standards,
+                 storage_duration,
+                 legal_basis,
+                 link_govt_sourced,
+                 link_media_sourced,
+                 rti_status,
+                 rti_replies,
+                 rti_date):
+
+        self.id = _id if _id else random_with_N_digits(8)
+        self.authority = authority
+        self.face_recognition_system = face_recognition_system
+        self.jurisdiction = jurisdiction
+        self.states = [state for state in re.sub(' ', '', states).split(',')]
+        self.upload_status = upload_status
+        self.purpose = purpose
+        self.technology_partner = technology_partner
+        self.tender_publication_date = tender_publication_date
+        self.reported_use_date = reported_use_date
+        self.status = status
+        self.linked_databases = linked_databases.rstrip()
+        self.financial_outlay = financial_outlay
+        self.prescribed_technical_standards = prescribed_technical_standards
+        self.storage_duration = storage_duration
+        self.legal_basis = legal_basis
+        self.link_govt_sourced = link_govt_sourced
+        self.link_media_sourced = link_media_sourced
+        self.rti_status = rti_status
+        self.rti_replies = rti_replies
+        self.rti_date = rti_date
+        self.technology_partner__key = self.get_technology_partner_key(
+            self.technology_partner)
+
+    def get_technology_partner_key(self, technology_partner):
+        cursor = conn.cursor()
+        cursor.execute(
+            "select id from panoptic.technology_partner where technology_partner = '{}';".format(technology_partner))
+        tech_partner, = cursor.fetchone()
+        cursor.close()
+
+        return tech_partner
+
+    def get_place_id(self, state):
+
+        cursor = conn.cursor()
+        cursor.execute(
+            "select id from panoptic.place where state='{}'".format(state))
+        state, = cursor.fetchone()
+        cursor.close()
+        return state
+
+    def get_state_ids(self):
+        cursor = conn.cursor()
+        cursor.execute(
+            "select place__key from panoptic.frt_place_link where frt__key  = {} ".format(self.id))
+        result = cursor.fetchall()
+        cursor.close()
+        state_ids = set([row[0] for row in result])
+        return state_ids
+
+    def add_place_id(self, place_key):
+        insert_cursor = conn.cursor()
+        query = ''' INSERT INTO panoptic.frt_place_link (frt__key, place__key) \
+                            VALUES ({frt_key},{place_key})'''.format_map({
+            'frt_key': self.id, 'place_key': place_key})
+        insert_cursor.execute(query)
+        conn.commit()
+        insert_cursor.close()
+
+    def delete_place_id(self, place_key):
+        insert_cursor = conn.cursor()
+        query = ''' DELETE FROM  panoptic.frt_place_link \
+                            WHERE frt__key = {frt_key} and place__key = {place_key} '''.format_map({
+            'frt_key': self.id, 'place_key': place_key})
+        insert_cursor.execute(query)
+        conn.commit()
+        insert_cursor.close()
+
+    def update_frt_place_table(self):
+        db_state_ids = self.get_state_ids()
+        gsheets_states = set([self.get_place_id(state)
+                              for state in self.states])
+
+        for place_id in gsheets_states - db_state_ids:
+            self.add_place_id(place_id)
+
+        for place_id in db_state_ids - gsheets_states:
+            self.delete_place_id(place_id)
+
+    def insert_to_frt_table(self):
+        query = '''INSERT INTO \
+                        panoptic.frt (id, \
+                                    authority,\
+                                    face_recognition_system,\
+                                    purpose,\
+                                    technology_partner__key,\
+                                    status,\
+                                    linked_databases, \
+                                    financial_outlay,\
+                                    prescribed_technical_standards,\
+                                    storage_duration, \
+                                    legal_basis, tender_publication_date,rti_date,reported_use)\
+                        VALUES\
+                        	({id},'{authority}','{face_recognition_system}','{purpose}',{technology_partner__key}, \
+                        	'{status}','{linked_databases}','{financial_outlay}','{prescribed_technical_standards}', \
+                        	'{storage_duration}', '{legal_basis}','{tender_publication_date}', '{rti_date}','{reported_use}')
+                         ON DUPLICATE KEY UPDATE
+                            id = {id},
+                            authority = '{authority}',
+                            face_recognition_system = '{face_recognition_system}',
+                            purpose = '{purpose}',
+                            technology_partner__key = {technology_partner__key},
+                            status = '{status}',
+                            linked_databases = '{linked_databases}',
+                            financial_outlay = '{financial_outlay}',
+                            prescribed_technical_standards = '{prescribed_technical_standards}',
+                            storage_duration = '{storage_duration}',
+                            legal_basis = '{legal_basis}',
+                            tender_publication_date = '{tender_publication_date}',
+                            rti_date = '{rti_date}',
+                            reported_use = '{reported_use}' 
+                         '''.format_map({'id': self.id,
+                                         'authority': self.authority,
+                                         'face_recognition_system': self.face_recognition_system,
+                                         'purpose': self.purpose,
+                                         'technology_partner__key': self.technology_partner__key,
+                                         'status': self.status,
+                                         'linked_databases': self.linked_databases,
+                                         'financial_outlay': self.financial_outlay,
+                                         'prescribed_technical_standards': self.prescribed_technical_standards,
+                                         'storage_duration': self.storage_duration,
+                                         'legal_basis': self.legal_basis,
+                                         'tender_publication_date': self.tender_publication_date,
+                                         'rti_date': self.rti_date,
+                                         'reported_use': self.reported_use_date
+                                         })
+
+        insert_cursor = conn.cursor()
+        insert_cursor.execute(query)
+        conn.commit()
+        insert_cursor.close()
