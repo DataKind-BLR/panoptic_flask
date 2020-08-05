@@ -20,8 +20,8 @@ def generate_map(geojson, data):
     ).add_to(f)
 
     popup = folium.GeoJsonPopup(
-        fields=['st_nm', 'FRT Systems Deployed' , 'Authority', 'Place', 'Purpose'],
-        aliases=['State','FRT Systems Deployed', 'Authority', 'Place', 'Purpose'],
+        fields=['st_nm', 'FRT Systems Deployed', 'Authority', 'Place', 'Purpose'],
+        aliases=['State', 'FRT Systems Deployed', 'Authority', 'Place', 'Purpose'],
         localize=True,
         labels=True,
         style='''
@@ -31,8 +31,8 @@ def generate_map(geojson, data):
     )
 
     tooltip = folium.GeoJsonTooltip(
-        fields=['st_nm','cartodb_id'],
-        aliases=['State',"FRT Systems Deployed"],
+        fields=['st_nm', 'cartodb_id'],
+        aliases=['State', 'FRT Systems Deployed'],
         localize=True,
         sticky=False,
         labels=True,
@@ -77,8 +77,8 @@ def generate_map(geojson, data):
         popup_html = '''
             <h1>Name: </h1>{}<br />\
             <h2>Location: </h2>{}<br />\
-            <a href="about:blank">More Details</a>
-        '''.format(state, auth)
+            <a target="_blank" href="/state/{}">More Details</a>
+        '''.format(state, auth, state)
         
         popup = folium.IFrame(popup_html, width=200, height=150)
         folium.Popup(popup, max_width=300).add_to(gs)
