@@ -5099,26 +5099,6 @@ a.badge-dark:focus, a.badge-dark.focus {
 }
 
 
-/* Folium India map css */
-.custom-container {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  padding-top: 150%; /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
-}
-
-/* Then style the iframe to fit in the container div with full height and width */
-.folium-iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 100vw;
-  height: 70vh;
-}
-
-
 @media (min-width: 576px) {
 
   .list-group-horizontal-sm {

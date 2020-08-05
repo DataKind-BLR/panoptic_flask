@@ -71,12 +71,7 @@
     </div>
     <div class="row text-center mt-4">
       <div class="col-md-6">
-        <div class="custom-container">
-          <!-- Option 1 - Rending from another html -->
-          <iframe class="folium-iframe" src="/map" style="border:none !important;"></iframe>
-          <!-- Option 2 - Rending from generated string -->
-          <!-- <iframe class="folium-iframe" src="about:blank" width="600" height="700" style="border:none !important;" data-html={{ iframe_map }} onload="this.contentDocument.open();this.contentDocument.write(atob(this.getAttribute('data-html')));this.contentDocument.close();" "allowfullscreen" "webkitallowfullscreen" "mozallowfullscreen"></iframe> -->
-        </div>
+        {{ iframe | safe }}
       </div>
       <div class="col-md-6">
         <table class="table table-striped">

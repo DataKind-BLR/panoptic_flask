@@ -6,8 +6,8 @@ app = Flask(__name__)
 @app.route('/')
 def root():
     # TODO: Srihari to generate iframe for map
-    generate_map()
-    return render_template('home.html')
+    html_map = generate_map()
+    return render_template('home.html', iframe=html_map)
 
 @app.route('/map')
 def map():
