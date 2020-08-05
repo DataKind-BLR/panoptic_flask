@@ -52,7 +52,7 @@ def generate_map():
     gdf['Place'][14] = 'KSR Bengaluru Station'
     gdf['Purpose'][14] = 'Security/ Surveillance'
 
-    gdf.to_file("./shape_files/india_gdf.json", driver="GeoJSON")
+    #gdf.to_file("./shape_files/india_gdf.json", driver="GeoJSON")
     
     with open('./shape_files/india_gdf.json') as response:
         india_gdf = json.load(response)
@@ -117,16 +117,16 @@ def generate_map():
                         })
         state = india_gdf['features'][i]['properties']['st_nm']
         auth = india_gdf['features'][i]['properties']['Authority']
-        html = f'''
-        <h1>Name: </h1>{state}<br />\
-        <h2>Location: </h2>{auth}<br />\
+        html = '''
+        <h1>Name: </h1>{}<br />\
+        <h2>Location: </h2>{}<br />\
         <a href="about:blank">More Details</a>
-        '''
-        iframe = IFrame(html, width=250, height=200)
-        folium.Popup(iframe, max_width=500).add_to(gs)
+        '''.format(state, auth)
+        iframe = IFrame(html, width=200, height=150)
+        folium.Popup(iframe, max_width=300).add_to(gs)
         gs.add_to(g)
 
     # f.save('./templates/map_plot.html')
     #html_string = f.get_root().render()
-    html_string = f.get_root().render()
-    return html_string
+    # html_string = f.get_root().render()
+    # return html_string
