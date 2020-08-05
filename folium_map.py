@@ -1,7 +1,5 @@
 import folium
 import branca
-from folium.features import GeoJson, GeoJsonTooltip, GeoJsonPopup
-
 
 def generate_map(geojson, data):
     # Create a white image of 4 pixels, and embed it in a url.
@@ -19,11 +17,9 @@ def generate_map(geojson, data):
         tiles=white_tile,
         attr='white tile',
         dragging=True
-        # width='100%',
-        # height='100%'
     ).add_to(f)
 
-    popup = GeoJsonPopup(
+    popup = folium.GeoJsonPopup(
         fields=['st_nm', 'FRT Systems Deployed' , 'Authority', 'Place', 'Purpose'],
         aliases=['State','FRT Systems Deployed', 'Authority', 'Place', 'Purpose'],
         localize=True,
@@ -34,7 +30,7 @@ def generate_map(geojson, data):
         ''',
     )
 
-    tooltip = GeoJsonTooltip(
+    tooltip = folium.GeoJsonTooltip(
         fields=['st_nm','cartodb_id'],
         aliases=['State',"FRT Systems Deployed"],
         localize=True,
