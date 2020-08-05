@@ -3,9 +3,9 @@ from json import load
 from mysql import connector
 
 conn = connector.connect (
-    host = os.environ.get('MYSQL_HOST'),
-    user = os.environ.get('MYSQL_USERNAME'),
-    password = os.environ.get('MYSQL_PASSWORD')
+    host=os.environ.get('MYSQL_HOST'),
+    user=os.environ.get('MYSQL_USERNAME'),
+    password=os.environ.get('MYSQL_PASSWORD')
 )
 cursor = conn.cursor()
 
