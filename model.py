@@ -1,44 +1,64 @@
 import os
+import time
+import pickle
 from json import load
 from mysql import connector
 
-conn = connector.connect (
-    host=os.environ.get('MYSQL_HOST'),
-    user=os.environ.get('MYSQL_USERNAME'),
-    password=os.environ.get('MYSQL_PASSWORD')
-)
-cursor = conn.cursor()
-
-
-if db_updated_date > last_updated:
-    # fetch resultset from DB into a dataframe
-    query = 'SELECT * FROM panoptic.frt'
-    resultset = execute_select_query(query)
-# return the dataframe we already have
-return resultset
-
 
 ## READ THIS: https://stackoverflow.com/questions/307438/how-can-i-tell-when-a-mysql-table-was-last-updated
+## AND THIS:  https://stackoverflow.com/questions/15749719/caching-mysql-query-returned-by-python-script
 
-def execute_select_query(query:str):
-    """
+# CACHE_FILENAME = 'results.cache'
+MAX_CACHE_AGE = 60*20  # 20 Minutes
+file_last_updated = time.time()
+
+def execute_query(query, cache_filename):
+    '''
     Executes the SELECT query on MYSQL database
 
     Arguments:
         query {str} -- Query to execute
+        cache_filname {str} -- Cache filename for the respective Query
     Returns:
-        {list} -- Columns returned by the query
-        {list} -- List of data returned by the query
-    """
-    cursor.execute(query)
+        {list} -- Resultset as a pandas DataFrame
+    '''
+    regen = False
+    try:
+        with open(cache_filename, 'r') as cache:
+            cached = pickle.load(cache)
 
-    # Get all the columns of data
-    headers = [x[0] for x in cursor.description]
-    data = cursor.fetchall()
+        if file_last_updated > (cached['timestamp'] + MAX_CACHE_AGE):
+            print("Cache too old: regenerating cache")
+            regen = True
+        else:
+            print("Cached data is fresh enough: loading results from cache")
 
-    conn.close()
+    except IOError:
+        print("Error opening %s: regenerating cache" % cache_filename)
+        regen = True
 
-    return headers, data
+    if regen:
+        # Cache too old, run query
+        conn = connector.connect (
+            host=os.environ.get('MYSQL_HOST'),
+            user=os.environ.get('MYSQL_USERNAME'),
+            password=os.environ.get('MYSQL_PASSWORD')
+        )
+        cursor = conn.cursor()
+        cursor.execute(query)
+        resultset = cursor.fetchall()
+        cursor.close()
+
+        # Update cache file
+        data = {'results': resultset, 'timestamp': file_last_updated}
+        with open(cache_filename, 'w') as cache:
+            pickle.dump(data, cache)
+
+    else:
+        # Cached data is fresh enough, use that
+        resultset = cached['results']
+    return resultset
+
 
 def get_state_frt(state:str):
     """
@@ -97,14 +117,7 @@ def get_state_frt(state:str):
             state=state
         )
 
-    results = []
-
-    headers, data = execute_select_query(query)
-
-    while data:
-        results.append(dict(zip(headers, data.pop())))
-
-    return results
+    return execute_query(query)
 
 def get_total_frt(state:str):
     """
@@ -148,12 +161,7 @@ def get_total_frt(state:str):
             state=state
         )
 
-    headers, data = execute_select_query(query)
-
-    while data:
-        result = dict(zip(headers, data.pop()))
-
-    return result
+    return execute_query(query)
 
 def get_single_state_frt(state:str = None):
     """
@@ -180,6 +188,7 @@ def get_single_state_frt(state:str = None):
         state = 'India'
 
     return utils.get_state_frt(state=state)
+
 
 def get_state_total_frt(state:str = None):
     """

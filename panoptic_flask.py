@@ -1,96 +1,75 @@
 import json
 import geopandas as gpd
-import pandas as pd
-from flask import Flask, render_template
+
 from folium_map import generate_map
-import sqlalchemy as sqla
+from flask import Flask, render_template
+
+
 
 app = Flask(__name__)
 
 with open('./shape_files/india_gdf.json') as response:
     india_gdf = json.load(response)
 
-gdf = gpd.read_file('./shape_files/states_india.shp')
+shape_df = gpd.read_file('./shape_files/states_india.shp')
 
-# Step 1 - connect to DB
-# sql_engine = sqla.create_engine('mysql+pymysql://root:ubuntu@ec2-3-7-235-141.ap-south-1.compute.amazonaws.com/panoptic')
-# sql_connection = sql_engine.connect()
+def merge_data(df):
 
-# Step 2 - get results in to a dataframe & cache it
-# main_df = pd.read_sql('SELECT * FROM frt', sql_connection)
-# last_updated = record time
+    df['Count of FRT Systems'] = 0
+    df['FRT Systems Deployed'] = 'None'
+    df['Authority'] = 'None'
+    df['Place'] = 'None'
+    df['Purpose'] = 'None'
 
-# Step 3 - use the dataframe to return values
+    df['FRT Systems Deployed'][0] = 'TSCOP + CCTNS'
+    df['Count of FRT Systems'][0] = 1
+    df['Authority'][0] = 'Hyderabad Police'
+    df['Place'][0] = 'Hyderabad'
+    df['Purpose'][0] = 'Security/ Surveillance'
 
-gdf['Count of FRT Systems'] = 0
-gdf['FRT Systems Deployed'] = 'None'
-gdf['Authority'] = 'None'
-gdf['Place'] = 'None'
-gdf['Purpose'] = 'None'
+    df['FRT Systems Deployed'][35] = 'AFRS'
+    df['Count of FRT Systems'][35] = 1
+    df['Authority'][35] = 'Delhi Police'
+    df['Place'][35] = 'Delhi'
+    df['Purpose'][35] = 'Security/ Surveillance'
 
-gdf['FRT Systems Deployed'][0] = 'TSCOP + CCTNS'
-gdf['Count of FRT Systems'][0] = 1
-gdf['Authority'][0] = 'Hyderabad Police'
-gdf['Place'][0] = 'Hyderabad'
-gdf['Purpose'][0] = 'Security/ Surveillance'
+    df['FRT Systems Deployed'][27] = 'Trinetra'
+    df['Count of FRT Systems'][27] = 1
+    df['Authority'][27] = 'UP Police'
+    df['Place'][27] = 'UP/Lucknow'
+    df['Purpose'][27] = 'Security/ Surveillance'
 
-gdf['FRT Systems Deployed'][35] = 'AFRS'
-gdf['Count of FRT Systems'][35] = 1
-gdf['Authority'][35] = 'Delhi Police'
-gdf['Place'][35] = 'Delhi'
-gdf['Purpose'][35] = 'Security/ Surveillance'
+    df['FRT Systems Deployed'][25] = 'FaceTagr'
+    df['Count of FRT Systems'][25] = 1
+    df['Authority'][25] = 'Chennai Police'
+    df['Place'][25] = 'Chennai'
+    df['Purpose'][25] = 'Security/ Surveillance'
 
-gdf['FRT Systems Deployed'][27] = 'Trinetra'
-gdf['Count of FRT Systems'][27] = 1
-gdf['Authority'][27] = 'UP Police'
-gdf['Place'][27] = 'UP/Lucknow'
-gdf['Purpose'][27] = 'Security/ Surveillance'
+    df['FRT Systems Deployed'][22] = 'Punjab Artificial Intelligence System'
+    df['Count of FRT Systems'][22] = 1
+    df['Authority'][22] = 'Punjab Police'
+    df['Place'][22] = 'Punjab'
+    df['Purpose'][22] = 'Security/ Surveillance'
 
-gdf['FRT Systems Deployed'][25] = 'FaceTagr'
-gdf['Count of FRT Systems'][25] = 1
-gdf['Authority'][25] = 'Chennai Police'
-gdf['Place'][25] = 'Chennai'
-gdf['Purpose'][25] = 'Security/ Surveillance'
+    df['FRT Systems Deployed'][14] = 'South Western Railways'
+    df['Count of FRT Systems'][14] = 1
+    df['Authority'][14] = 'South Western Railways'
+    df['Place'][14] = 'KSR Bengaluru Station'
+    df['Purpose'][14] = 'Security/ Surveillance'
 
-gdf['FRT Systems Deployed'][22] = 'Punjab Artificial Intelligence System'
-gdf['Count of FRT Systems'][22] = 1
-gdf['Authority'][22] = 'Punjab Police'
-gdf['Place'][22] = 'Punjab'
-gdf['Purpose'][22] = 'Security/ Surveillance'
-
-gdf['FRT Systems Deployed'][14] = 'South Western Railways'
-gdf['Count of FRT Systems'][14] = 1
-gdf['Authority'][14] = 'South Western Railways'
-gdf['Place'][14] = 'KSR Bengaluru Station'
-gdf['Purpose'][14] = 'Security/ Surveillance'
+    return df
 
 
 @app.route('/')
 def root():
-    html_map = generate_map(geojson=india_gdf, data=gdf)
+    formatted_df = merge_data(shape_df)
+    html_map = generate_map(geojson=india_gdf, data=formatted_df)
     return render_template('home.html', iframe=html_map)
 
-# last_updated = '5th August'
-
-# def is_db_updated():
-#     engine.connect()
-#     db_date = pd.read_sql('SELECT timestamp from information_schema', connection)
-#     if db_date > last_updated:
-#         last_updated = db_date
-#         return True
-#     else:
-#         return False 
 
 @app.route('/state/<state>')
 def get_frts(state):
     return state
-    # if is_db_updated():
-    #     main_df = pd.read_sql('SELECT * from frt', connection)
-    # else:
-    #     state_df = main_df[main_df['State'] == state]
-    #     if state_df.empty:
-    #         @app.errorhandler(500)
-    #     return render_template('state.html', data=state_df.to_dict(orient='records'))
 
 
 def total_frts(state='India'):
