@@ -8,8 +8,7 @@ from mysql import connector
 ## READ THIS: https://stackoverflow.com/questions/307438/how-can-i-tell-when-a-mysql-table-was-last-updated
 ## AND THIS:  https://stackoverflow.com/questions/15749719/caching-mysql-query-returned-by-python-script
 
-# CACHE_FILENAME = 'results.cache'
-MAX_CACHE_AGE = 60*20  # 20 Minutes
+MAX_CACHE_AGE = 60*20               # 20 Minutes
 file_last_updated = time.time()
 
 def execute_query(query, cache_filename):
@@ -39,7 +38,7 @@ def execute_query(query, cache_filename):
 
     if regen:
         # Cache too old, run query
-        conn = connector.connect (
+        conn = connector.connect(
             host=os.environ.get('MYSQL_HOST'),
             user=os.environ.get('MYSQL_USERNAME'),
             password=os.environ.get('MYSQL_PASSWORD')
@@ -53,7 +52,6 @@ def execute_query(query, cache_filename):
         data = {'results': resultset, 'timestamp': file_last_updated}
         with open(cache_filename, 'w') as cache:
             pickle.dump(data, cache)
-
     else:
         # Cached data is fresh enough, use that
         resultset = cached['results']
