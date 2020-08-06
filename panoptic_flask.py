@@ -1,7 +1,10 @@
 import json
 import geopandas as gpd
+import pandas as pd
 from flask import Flask, render_template
 from folium_map import generate_map
+import sqlalchemy as sqla
+
 app = Flask(__name__)
 
 with open('./shape_files/india_gdf.json') as response:
@@ -10,7 +13,13 @@ with open('./shape_files/india_gdf.json') as response:
 gdf = gpd.read_file('./shape_files/states_india.shp')
 
 # Step 1 - connect to DB
+# sql_engine = sqla.create_engine('mysql+pymysql://root:ubuntu@ec2-3-7-235-141.ap-south-1.compute.amazonaws.com/panoptic')
+# sql_connection = sql_engine.connect()
+
 # Step 2 - get results in to a dataframe & cache it
+# main_df = pd.read_sql('SELECT * FROM frt', sql_connection)
+# last_updated = record time
+
 # Step 3 - use the dataframe to return values
 
 gdf['Count of FRT Systems'] = 0
@@ -61,13 +70,33 @@ def root():
     html_map = generate_map(geojson=india_gdf, data=gdf)
     return render_template('home.html', iframe=html_map)
 
+# last_updated = '5th August'
+
+# def is_db_updated():
+#     engine.connect()
+#     db_date = pd.read_sql('SELECT timestamp from information_schema', connection)
+#     if db_date > last_updated:
+#         last_updated = db_date
+#         return True
+#     else:
+#         return False 
 
 @app.route('/state/<state>')
 def get_frts(state):
-    state_df = main_df[main_df['State'] == state]
-    if state_df.empty:
-        @app.errorhandler(500)
-    return render_template('state.html', data=state_df.to_dict(orient='records'))
+    return state
+    # if is_db_updated():
+    #     main_df = pd.read_sql('SELECT * from frt', connection)
+    # else:
+    #     state_df = main_df[main_df['State'] == state]
+    #     if state_df.empty:
+    #         @app.errorhandler(500)
+    #     return render_template('state.html', data=state_df.to_dict(orient='records'))
+
+
+def total_frts(state='India'):
+    if state == 'India':
+        return main_df.count()
+    return main_df.groupby(state).count()
 
 
 @app.route('/submit_frt')
