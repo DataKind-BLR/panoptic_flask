@@ -9,6 +9,10 @@ with open('./shape_files/india_gdf.json') as response:
 
 gdf = gpd.read_file('./shape_files/states_india.shp')
 
+# Step 1 - connect to DB
+# Step 2 - get results in to a dataframe & cache it
+# Step 3 - use the dataframe to return values
+
 gdf['Count of FRT Systems'] = 0
 gdf['FRT Systems Deployed'] = 'None'
 gdf['Authority'] = 'None'
@@ -60,7 +64,10 @@ def root():
 
 @app.route('/state/<state>')
 def get_frts(state):
-    return state
+    state_df = main_df[main_df['State'] == state]
+    if state_df.empty:
+        @app.errorhandler(500)
+    return render_template('state.html', data=state_df.to_dict(orient='records'))
 
 
 @app.route('/submit_frt')
