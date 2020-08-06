@@ -5,7 +5,6 @@ def generate_map(geojson, data):
     # Create a white image of 4 pixels, and embed it in a url.
     white_tile = branca.utilities.image_to_url([[1, 1], [1, 1]])
 
-    f = folium.Figure()
     m = folium.Map(
         [23.53, 78.3],
         maxZoom=6,
@@ -17,7 +16,7 @@ def generate_map(geojson, data):
         tiles=white_tile,
         attr='white tile',
         dragging=True
-    ).add_to(f)
+    )
 
     popup = folium.GeoJsonPopup(
         fields=['st_nm', 'FRT Systems Deployed', 'Authority', 'Place', 'Purpose'],
