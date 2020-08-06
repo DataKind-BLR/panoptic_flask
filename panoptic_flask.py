@@ -9,7 +9,6 @@ with open('./shape_files/india_gdf.json') as response:
 
 gdf = gpd.read_file('./shape_files/states_india.shp')
 
-
 gdf['Count of FRT Systems'] = 0
 gdf['FRT Systems Deployed'] = 'None'
 gdf['Authority'] = 'None'

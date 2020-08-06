@@ -9,6 +9,17 @@ conn = connector.connect (
 )
 cursor = conn.cursor()
 
+
+if db_updated_date > last_updated:
+    # fetch resultset from DB into a dataframe
+    query = 'SELECT * FROM panoptic.frt'
+    resultset = execute_select_query(query)
+# return the dataframe we already have
+return resultset
+
+
+## READ THIS: https://stackoverflow.com/questions/307438/how-can-i-tell-when-a-mysql-table-was-last-updated
+
 def execute_select_query(query:str):
     """
     Executes the SELECT query on MYSQL database
@@ -95,7 +106,6 @@ def get_state_frt(state:str):
 
     return results
 
-
 def get_total_frt(state:str):
     """
     Get total number of FRTs for a single state.
@@ -144,7 +154,6 @@ def get_total_frt(state:str):
         result = dict(zip(headers, data.pop()))
 
     return result
-
 
 def get_single_state_frt(state:str = None):
     """
