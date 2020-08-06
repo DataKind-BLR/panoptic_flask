@@ -29,21 +29,6 @@ def generate_map(geojson, data):
         ''',
     )
 
-    tooltip = folium.GeoJsonTooltip(
-        fields=['st_nm', 'cartodb_id'],
-        aliases=['State', 'FRT Systems Deployed'],
-        localize=True,
-        sticky=False,
-        labels=True,
-        style="""
-            background-color: #F0EFEF;
-            border: 1px solid black;
-            border-radius: 3px;
-            box-shadow: 3px;
-        """,
-        max_width=800,
-    )
-
     g = folium.Choropleth(
         geo_data=geojson,
         data=data,
