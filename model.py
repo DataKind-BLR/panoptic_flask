@@ -4,6 +4,12 @@ import pickle
 from json import load
 from mysql import connector
 
+conn = connector.connect(
+    host=os.environ.get('MYSQL_HOST'),
+    user=os.environ.get('MYSQL_USERNAME'),
+    password=os.environ.get('MYSQL_PASSWORD')
+)
+
 
 ## READ THIS: https://stackoverflow.com/questions/307438/how-can-i-tell-when-a-mysql-table-was-last-updated
 ## AND THIS:  https://stackoverflow.com/questions/15749719/caching-mysql-query-returned-by-python-script
@@ -38,11 +44,6 @@ def execute_query(query, cache_filename):
 
     if regen:
         # Cache too old, run query
-        conn = connector.connect(
-            host=os.environ.get('MYSQL_HOST'),
-            user=os.environ.get('MYSQL_USERNAME'),
-            password=os.environ.get('MYSQL_PASSWORD')
-        )
         cursor = conn.cursor()
         cursor.execute(query)
         resultset = cursor.fetchall()
