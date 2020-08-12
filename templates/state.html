@@ -3,9 +3,65 @@
 {% include "page_nav.html" %}
 <!-- DO NOT ADD ANYTHING ABOVE THIS LINE -->
 
-<div class="container">
-  <h1>State Level FRT</h1>
-</div>
+<section class="page-section">
+  <div class="container">
+    <div class="text-center">
+      <h2 class="section-heading text-uppercase">{{ state['name'] }}</h2>
+    </div>
+    <div class="row text-center">
+      <div class="col-md-3 col-sm-12">
+        <span class="fa-stack fa-4x">
+          <span>54</span>
+        </span>
+        <h4 class="my-3">Total FRT Systems</h4>
+      </div>
+      <div class="col-md-3 col-sm-12">
+        <span class="fa-stack fa-4x">
+          <span>16 Cr</span>
+        </span>
+        <h4 class="my-3">Finacial Outlay</h4>
+      </div>
+      <div class="col-md-3 col-sm-12">
+        <span class="fa-stack fa-4x">
+          <span>17</span>
+        </span>
+        <h4 class="my-3">In Use</h4>
+      </div>
+      <div class="col-md-3 col-sm-12">
+        <span class="fa-stack fa-4x">
+          <span>3</span>
+        </span>
+        <h4 class="my-3">Not In Use</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="page-section">
+  <div class="container">
+    <div class="text-center">
+      <h4 class="section-heading text-uppercase">FRT Systems in {{ state['name'] }}</h4>
+    </div>
+
+    <div class="row">
+
+      {% for frt in state['frts'] %}
+        <div class="col-md-6 col-sm-12 my-3">      
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ frt['name'] }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="card-link">RTI Replies</a>
+              <a href="#" class="card-link">Media Source</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+
+  </div>
+</section>
 
 <!-- DO NOT ADD ANYTHING BELOW THIS LINE -->
 {% endblock %}

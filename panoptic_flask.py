@@ -1,10 +1,7 @@
 import json
 import geopandas as gpd
-
 from folium_map import generate_map
 from flask import Flask, render_template
-
-
 
 app = Flask(__name__)
 
@@ -12,6 +9,7 @@ with open('./shape_files/india_gdf.json') as response:
     india_gdf = json.load(response)
 
 shape_df = gpd.read_file('./shape_files/states_india.shp')
+
 
 def merge_data(df):
 
@@ -60,6 +58,24 @@ def merge_data(df):
     return df
 
 
+'''
+GLOBAL_DATA_HOME = {
+    'total_frts': 54,
+    'total_frts_national': 16,
+    'total_frts_states': 38,
+    'total_frts_submitted': 34, # count of FRTs submitted in survey (optional)
+    'states': [{
+          'state': 'Telangana',
+          'state_total': 2
+        }, {
+          'state': 'Andaman & Nicobar Island',
+          'state_total': 0
+        },
+        ...
+    ]
+}
+'''
+
 @app.route('/')
 def root():
     formatted_df = merge_data(shape_df)
@@ -69,7 +85,42 @@ def root():
 
 @app.route('/state/<state>')
 def get_frts(state):
-    return state
+    state_data = {
+        'name': state,
+        'total_frts': 20,
+        'total_in_use': 17,
+        'total_not_in_use': 3,
+        'financial_outlay_cr': 150,
+        'frts': [{
+            'name': 'Delhi Airport: Digiyatra',
+            'in_use': True,
+            'purpose': 'Authentication of Identity',
+            'report_use_on': 'Sept 2018 onwards',
+            'rti_filed_on': '3rd Dec 2018',
+            'financial_outlay_cr': 3.4,
+            'media_source': 'https://internetfreedom.in/',
+            'rti_response': 'https://internetfreedom.in/'
+        }, {
+            'name': 'Soemthing Else',
+            'in_use': False,
+            'purpose': 'Authentication of Identity',
+            'report_use_on': 'Sept 2018 onwards',
+            'rti_filed_on': '3rd Dec 2018',
+            'financial_outlay_cr': 3.4,
+            'media_source': 'https://internetfreedom.in/',
+            'rti_response': 'https://internetfreedom.in/'
+        }, {
+            'name': 'Another',
+            'in_use': True,
+            'purpose': 'Authentication of Identity',
+            'report_use_on': 'Sept 2018 onwards',
+            'rti_filed_on': '3rd Dec 2018',
+            'financial_outlay_cr': 3.4,
+            'media_source': 'https://internetfreedom.in/',
+            'rti_response': 'https://internetfreedom.in/'
+        }]
+    }
+    return render_template('state.html', state=state_data)
 
 
 def total_frts(state='India'):
