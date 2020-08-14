@@ -7,10 +7,10 @@ def generate_map(geojson, data):
 
     m = folium.Map(
         [23.53, 78.3],
-        maxZoom=6,
-        minZoom=4.0,
+        maxZoom=7,
+        minZoom=4,
         zoom_control=True,
-        zoom_start=4,
+        zoom_start=5,
         scrollWheelZoom=True,
         maxBounds=[[40, 68],[6, 97]],
         tiles=white_tile,
