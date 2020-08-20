@@ -10,7 +10,6 @@ conn = connector.connect(
     password=os.environ.get('MYSQL_PASSWORD')
 )
 
-
 ## READ THIS: https://stackoverflow.com/questions/307438/how-can-i-tell-when-a-mysql-table-was-last-updated
 ## AND THIS:  https://stackoverflow.com/questions/15749719/caching-mysql-query-returned-by-python-script
 
@@ -117,6 +116,7 @@ def get_state_frt(state:str):
         )
 
     return execute_query(query)
+
 
 def get_total_frt(state:str):
     """

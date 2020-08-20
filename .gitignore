@@ -1,6 +1,9 @@
 # Folders
 static/node_modules/
 
+# Files
+credentials.yaml
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
