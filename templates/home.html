@@ -17,10 +17,10 @@
 <section class="page-section" id="#">
   <div class="container-fluid">
     <div class="row text-center mt-4">
-      <div class="col-md-8">
-        {{ iframe | safe }}
+      <div class="col-md-8 col-sm-12">
+        {{ data['iframe'] | safe }}
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 col-sm-12 overflow-auto" style="height: 100vh;">
         <table class="table table-striped">
           <thead>
             <tr>
@@ -29,18 +29,12 @@
             </tr>
           </thead>
           <tbody>
+          {% for state in data['states'] %}
             <tr>
-              <th scope="row">Karnataka</th>
-              <td>12</td>
+              <th scope="row"><a href="/state/{{ state['st_nm'] }}">{{ state['st_nm'] }}</a></th>
+              <td>{{ state['Count of FRT Systems'] }}</td>
             </tr>
-            <tr>
-              <th scope="row">Maharashtra</th>
-              <td>8</td>
-            </tr>
-            <tr>
-              <th scope="row">Kerala</th>
-              <td>10</td>
-            </tr>
+          {% endfor %}
           </tbody>
         </table>
       </div>

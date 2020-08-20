@@ -80,7 +80,10 @@ GLOBAL_DATA_HOME = {
 def root():
     formatted_df = merge_data(shape_df)
     html_map = generate_map(geojson=india_gdf, data=formatted_df)
-    return render_template('home.html', iframe=html_map)
+    return render_template('home.html', data={
+        'iframe': html_map,
+        'states': formatted_df[['st_nm', 'Count of FRT Systems']].to_dict(orient='records')
+    })
 
 
 @app.route('/state/<state>')
