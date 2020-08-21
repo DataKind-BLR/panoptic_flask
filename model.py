@@ -1,14 +1,20 @@
 import os
 import time
 import pickle
+import pandas as pd
 from json import load
 from mysql import connector
 
+# THESE CREDENTIALS SHOULD EXIST IN YOUR LOCAL
 conn = connector.connect(
-    host=os.environ.get('MYSQL_HOST'),
-    user=os.environ.get('MYSQL_USERNAME'),
-    password=os.environ.get('MYSQL_PASSWORD')
+    host='localhost',
+    user='root',
+    password='admin123',
+    database='panoptic'
 )
+cursor = conn.cursor()
+df = pd.read_sql('SELECT * FROM frt', conn)
+
 
 ## READ THIS: https://stackoverflow.com/questions/307438/how-can-i-tell-when-a-mysql-table-was-last-updated
 ## AND THIS:  https://stackoverflow.com/questions/15749719/caching-mysql-query-returned-by-python-script

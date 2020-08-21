@@ -1,5 +1,6 @@
 # Folders
 static/node_modules/
+db/
 
 # Files
 credentials.yaml

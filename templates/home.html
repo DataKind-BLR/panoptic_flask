@@ -16,7 +16,7 @@
 <!-- Map + Data -->
 <section class="page-section" id="#">
   <div class="container-fluid">
-    <div class="row text-center mt-4">
+    <div class="row mt-4">
       <div class="col-md-8 col-sm-12">
         {{ data['iframe'] | safe }}
       </div>
@@ -25,14 +25,14 @@
           <thead>
             <tr>
               <th scope="col">State</th>
-              <th scope="col"># of FRTs</th>
+              <th scope="col" class="text-right"># of FRTs</th>
             </tr>
           </thead>
           <tbody>
           {% for state in data['states'] %}
             <tr>
               <th scope="row"><a href="/state/{{ state['st_nm'] }}">{{ state['st_nm'] }}</a></th>
-              <td>{{ state['Count of FRT Systems'] }}</td>
+              <td class="text-right">{{ state['Count of FRT Systems'] }}</td>
             </tr>
           {% endfor %}
           </tbody>
