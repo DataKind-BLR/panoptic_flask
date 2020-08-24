@@ -2,18 +2,26 @@ import os
 import time
 import pickle
 import pandas as pd
-from json import load
+# from json import load
 from mysql import connector
 
-# THESE CREDENTIALS SHOULD EXIST IN YOUR LOCAL
-conn = connector.connect(
-    host='localhost',
-    user='root',
-    password='admin123',
-    database='panoptic'
-)
-cursor = conn.cursor()
-df = pd.read_sql('SELECT * FROM frt', conn)
+
+class DB:
+
+    def __init__(self, c):
+        # THESE CREDENTIALS SHOULD EXIST IN YOUR LOCAL
+        self.conn = connector.connect(
+            host=c['host'],
+            user=c['user'],
+            password=c['password'],
+            database=c['database']
+        )
+        self.cursor = self.conn.cursor()
+
+
+    def get_frt(self):
+        df = pd.read_sql('SELECT * FROM frt', self.conn)
+        return df
 
 
 ## READ THIS: https://stackoverflow.com/questions/307438/how-can-i-tell-when-a-mysql-table-was-last-updated

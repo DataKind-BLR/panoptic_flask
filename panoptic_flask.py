@@ -1,8 +1,8 @@
 import json
+from model import DB
 import geopandas as gpd
 from folium_map import generate_map
 from flask import Flask, render_template
-import model
 
 app = Flask(__name__)
 
@@ -11,9 +11,14 @@ with open('./shape_files/india_gdf.json') as response:
 
 shape_df = gpd.read_file('./shape_files/states_india.shp')
 
+db = DB({
+    'host': 'localhost',
+    'user': 'root',
+    'password': 'admin123',
+    'database': 'panoptic'
+})
 
 def merge_data(df):
-
     df['Count of FRT Systems'] = 0
     df['FRT Systems Deployed'] = 'None'
     df['Authority'] = 'None'
@@ -60,7 +65,7 @@ def merge_data(df):
 
 
 '''
-GLOBAL_DATA_HOME = {
+HOME_PAGE = {
     'total_frts': 54,
     'total_frts_national': 16,
     'total_frts_states': 38,
@@ -74,6 +79,42 @@ GLOBAL_DATA_HOME = {
         },
         ...
     ]
+}
+
+STATE_PAGE = {
+    'name': state,
+    'total_frts': 20,
+    'total_in_use': 17,
+    'total_not_in_use': 3,
+    'financial_outlay_cr': 150,
+    'frts': [{
+        'name': 'Delhi Airport: Digiyatra',
+        'in_use': True,
+        'purpose': 'Authentication of Identity',
+        'report_use_on': 'Sept 2018 onwards',
+        'rti_filed_on': '3rd Dec 2018',
+        'financial_outlay_cr': 3.4,
+        'media_source': 'https://internetfreedom.in/',
+        'rti_response': 'https://internetfreedom.in/'
+    }, {
+        'name': 'Soemthing Else',
+        'in_use': False,
+        'purpose': 'Authentication of Identity',
+        'report_use_on': 'Sept 2018 onwards',
+        'rti_filed_on': '3rd Dec 2018',
+        'financial_outlay_cr': 3.4,
+        'media_source': 'https://internetfreedom.in/',
+        'rti_response': 'https://internetfreedom.in/'
+    }, {
+        'name': 'Another',
+        'in_use': True,
+        'purpose': 'Authentication of Identity',
+        'report_use_on': 'Sept 2018 onwards',
+        'rti_filed_on': '3rd Dec 2018',
+        'financial_outlay_cr': 3.4,
+        'media_source': 'https://internetfreedom.in/',
+        'rti_response': 'https://internetfreedom.in/'
+    }]
 }
 '''
 
