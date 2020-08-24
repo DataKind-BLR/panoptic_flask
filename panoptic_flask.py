@@ -2,7 +2,7 @@ import json
 import geopandas as gpd
 from folium_map import generate_map
 from flask import Flask, render_template
-import model
+from model import model
 
 app = Flask(__name__)
 
