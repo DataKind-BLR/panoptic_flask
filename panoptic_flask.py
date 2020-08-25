@@ -18,10 +18,11 @@ shape_df = gpd.read_file(STATES_INDIA)
 
 @app.route('/')
 def root():
-    shape_df['state_total'] = 7
+    shape_df['state_total'] = 7         # SAMPLE ALL STATES = 7
     html_map = generate_map(map_json, shape_df)
     return render_template('home.html', data={
-        'iframe': html_map
+        'iframe': html_map,
+        'states': shape_df[['st_nm', 'state_total']].to_dict(orient='records')
     })
 
 

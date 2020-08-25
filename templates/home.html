@@ -29,10 +29,12 @@
             </tr>
           </thead>
           <tbody>
+          {% for state in data['states'] %}
             <tr>
-              <th>Karnataka</th>
-              <td>23</td>
+              <th>{{ state['st_nm'] }}</th>
+              <td>{{ state['state_total'] }}</td>
             </tr>
+          {% endfor %}
           </tbody>
         </table>
       </div>

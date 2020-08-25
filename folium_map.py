@@ -32,7 +32,7 @@ def generate_map(map_json, data):
     g = folium.Choropleth(
         geo_data=map_json,
         data=data,
-        columns=['st_nm', 'state_total'],
+        columns=['st_nm', 'state_total'],           # from dataframe `data`
         key_on='properties.st_nm',
         fill_color='Set3',
         fill_opacity=0.7,
