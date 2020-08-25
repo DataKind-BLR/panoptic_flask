@@ -5,8 +5,7 @@
       "properties": {
         "cartodb_id": 1,
         "state_code": 0,
-        "st_nm": "Telangana",
-        "total_frts": 1
+        "st_nm": "Telangana"
       },
       "geometry": {
         "type": "Polygon",
@@ -118,8 +117,7 @@
       "properties": {
         "cartodb_id": 2,
         "state_code": 35,
-        "st_nm": "Andaman & Nicobar Island",
-        "total_frts": 0
+        "st_nm": "Andaman & Nicobar Island"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -193,8 +191,7 @@
       "properties": {
         "cartodb_id": 3,
         "state_code": 28,
-        "st_nm": "Andhra Pradesh",
-        "total_frts": 0
+        "st_nm": "Andhra Pradesh"
       },
       "geometry": {
         "type": "Polygon",
@@ -367,8 +364,7 @@
       "properties": {
         "cartodb_id": 4,
         "state_code": 12,
-        "st_nm": "Arunanchal Pradesh",
-        "total_frts": 0
+        "st_nm": "Arunanchal Pradesh"
       },
       "geometry": {
         "type": "Polygon",
@@ -488,8 +484,7 @@
       "properties": {
         "cartodb_id": 5,
         "state_code": 18,
-        "st_nm": "Assam",
-        "total_frts": 0
+        "st_nm": "Assam"
       },
       "geometry": {
         "type": "Polygon",
@@ -614,8 +609,7 @@
       "properties": {
         "cartodb_id": 6,
         "state_code": 10,
-        "st_nm": "Bihar",
-        "total_frts": 0
+        "st_nm": "Bihar"
       },
       "geometry": {
         "type": "Polygon",
@@ -739,8 +733,7 @@
       "properties": {
         "cartodb_id": 8,
         "state_code": 22,
-        "st_nm": "Chhattisgarh",
-        "total_frts": 0
+        "st_nm": "Chhattisgarh"
       },
       "geometry": {
         "type": "Polygon",
@@ -885,8 +878,7 @@
       "properties": {
         "cartodb_id": 10,
         "state_code": 25,
-        "st_nm": "Daman & Diu",
-        "total_frts": 0
+        "st_nm": "Daman & Diu"
       },
       "geometry": null
     },
@@ -895,8 +887,7 @@
       "properties": {
         "cartodb_id": 11,
         "state_code": 30,
-        "st_nm": "Goa",
-        "total_frts": 0
+        "st_nm": "Goa"
       },
       "geometry": {
         "type": "Polygon",
@@ -926,8 +917,7 @@
       "properties": {
         "cartodb_id": 12,
         "state_code": 24,
-        "st_nm": "Gujarat",
-        "total_frts": 0
+        "st_nm": "Gujarat"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -1097,8 +1087,7 @@
       "properties": {
         "cartodb_id": 13,
         "state_code": 6,
-        "st_nm": "Haryana",
-        "total_frts": 0
+        "st_nm": "Haryana"
       },
       "geometry": {
         "type": "Polygon",
@@ -1204,8 +1193,7 @@
       "properties": {
         "cartodb_id": 14,
         "state_code": 2,
-        "st_nm": "Himachal Pradesh",
-        "total_frts": 0
+        "st_nm": "Himachal Pradesh"
       },
       "geometry": {
         "type": "Polygon",
@@ -1285,8 +1273,7 @@
       "properties": {
         "cartodb_id": 15,
         "state_code": 1,
-        "st_nm": "Jammu & Kashmir",
-        "total_frts": 0
+        "st_nm": "Jammu & Kashmir"
       },
       "geometry": {
         "type": "Polygon",
@@ -1440,8 +1427,7 @@
       "properties": {
         "cartodb_id": 16,
         "state_code": 20,
-        "st_nm": "Jharkhand",
-        "total_frts": 0
+        "st_nm": "Jharkhand"
       },
       "geometry": {
         "type": "Polygon",
@@ -1563,8 +1549,7 @@
       "properties": {
         "cartodb_id": 17,
         "state_code": 29,
-        "st_nm": "Karnataka",
-        "total_frts": 1
+        "st_nm": "Karnataka"
       },
       "geometry": {
         "type": "Polygon",
@@ -1717,8 +1702,7 @@
       "properties": {
         "cartodb_id": 18,
         "state_code": 32,
-        "st_nm": "Kerala",
-        "total_frts": 0
+        "st_nm": "Kerala"
       },
       "geometry": {
         "type": "Polygon",
@@ -1796,8 +1780,7 @@
       "properties": {
         "cartodb_id": 19,
         "state_code": 31,
-        "st_nm": "Lakshadweep",
-        "total_frts": 0
+        "st_nm": "Lakshadweep"
       },
       "geometry": null
     },
@@ -1806,8 +1789,7 @@
       "properties": {
         "cartodb_id": 20,
         "state_code": 23,
-        "st_nm": "Madhya Pradesh",
-        "total_frts": 0
+        "st_nm": "Madhya Pradesh"
       },
       "geometry": {
         "type": "Polygon",
@@ -2071,8 +2053,7 @@
       "properties": {
         "cartodb_id": 21,
         "state_code": 27,
-        "st_nm": "Maharashtra",
-        "total_frts": 0
+        "st_nm": "Maharashtra"
       },
       "geometry": {
         "type": "Polygon",
@@ -2272,8 +2253,7 @@
       "properties": {
         "cartodb_id": 22,
         "state_code": 14,
-        "st_nm": "Manipur",
-        "total_frts": 0
+        "st_nm": "Manipur"
       },
       "geometry": {
         "type": "Polygon",
@@ -2322,8 +2302,7 @@
       "properties": {
         "cartodb_id": 7,
         "state_code": 4,
-        "st_nm": "Chandigarh",
-        "total_frts": 0
+        "st_nm": "Chandigarh"
       },
       "geometry": null
     },
@@ -2332,8 +2311,7 @@
       "properties": {
         "cartodb_id": 27,
         "state_code": 34,
-        "st_nm": "Puducherry",
-        "total_frts": 0
+        "st_nm": "Puducherry"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -2602,8 +2580,7 @@
       "properties": {
         "cartodb_id": 28,
         "state_code": 3,
-        "st_nm": "Punjab",
-        "total_frts": 1
+        "st_nm": "Punjab"
       },
       "geometry": {
         "type": "Polygon",
@@ -2680,8 +2657,7 @@
       "properties": {
         "cartodb_id": 29,
         "state_code": 8,
-        "st_nm": "Rajasthan",
-        "total_frts": 0
+        "st_nm": "Rajasthan"
       },
       "geometry": {
         "type": "Polygon",
@@ -2898,8 +2874,7 @@
       "properties": {
         "cartodb_id": 30,
         "state_code": 11,
-        "st_nm": "Sikkim",
-        "total_frts": 0
+        "st_nm": "Sikkim"
       },
       "geometry": {
         "type": "Polygon",
@@ -2934,8 +2909,7 @@
       "properties": {
         "cartodb_id": 31,
         "state_code": 33,
-        "st_nm": "Tamil Nadu",
-        "total_frts": 1
+        "st_nm": "Tamil Nadu"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -3261,8 +3235,7 @@
       "properties": {
         "cartodb_id": 32,
         "state_code": 16,
-        "st_nm": "Tripura",
-        "total_frts": 0
+        "st_nm": "Tripura"
       },
       "geometry": {
         "type": "Polygon",
@@ -3304,8 +3277,7 @@
       "properties": {
         "cartodb_id": 33,
         "state_code": 9,
-        "st_nm": "Uttar Pradesh",
-        "total_frts": 1
+        "st_nm": "Uttar Pradesh"
       },
       "geometry": {
         "type": "Polygon",
@@ -3508,8 +3480,7 @@
       "properties": {
         "cartodb_id": 34,
         "state_code": 5,
-        "st_nm": "Uttarakhand",
-        "total_frts": 0
+        "st_nm": "Uttarakhand"
       },
       "geometry": {
         "type": "Polygon",
@@ -3588,8 +3559,7 @@
       "properties": {
         "cartodb_id": 35,
         "state_code": 19,
-        "st_nm": "West Bengal",
-        "total_frts": 0
+        "st_nm": "West Bengal"
       },
       "geometry": {
         "type": "Polygon",
@@ -3738,8 +3708,7 @@
       "properties": {
         "cartodb_id": 36,
         "state_code": 21,
-        "st_nm": "Odisha",
-        "total_frts": 0
+        "st_nm": "Odisha"
       },
       "geometry": {
         "type": "Polygon",
@@ -3869,8 +3838,7 @@
       "properties": {
         "cartodb_id": 9,
         "state_code": 26,
-        "st_nm": "Dadara & Nagar Havelli",
-        "total_frts": 0
+        "st_nm": "Dadara & Nagar Havelli"
       },
       "geometry": {
         "type": "Polygon",
@@ -3892,8 +3860,7 @@
       "properties": {
         "cartodb_id": 23,
         "state_code": 17,
-        "st_nm": "Meghalaya",
-        "total_frts": 0
+        "st_nm": "Meghalaya"
       },
       "geometry": {
         "type": "Polygon",
@@ -3948,8 +3915,7 @@
       "properties": {
         "cartodb_id": 24,
         "state_code": 15,
-        "st_nm": "Mizoram",
-        "total_frts": 0
+        "st_nm": "Mizoram"
       },
       "geometry": {
         "type": "Polygon",
@@ -4002,8 +3968,7 @@
       "properties": {
         "cartodb_id": 25,
         "state_code": 13,
-        "st_nm": "Nagaland",
-        "total_frts": 0
+        "st_nm": "Nagaland"
       },
       "geometry": {
         "type": "Polygon",
@@ -4054,8 +4019,7 @@
       "properties": {
         "cartodb_id": 26,
         "state_code": 7,
-        "st_nm": "NCT of Delhi",
-        "total_frts": 1
+        "st_nm": "NCT of Delhi"
       },
       "geometry": {
         "type": "Polygon",

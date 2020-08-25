@@ -15,21 +15,11 @@ with open(MAP_JSON) as response:
 
 shape_df = gpd.read_file(STATES_INDIA)
 
-def merge_data(df):
-    df['Count of FRT Systems'] = 0
-    df['Count of FRT Systems'][0] = 1
-    df['Count of FRT Systems'][35] = 7
-    df['Count of FRT Systems'][27] = 5
-    df['Count of FRT Systems'][25] = 2
-    df['Count of FRT Systems'][22] = 12
-    df['Count of FRT Systems'][14] = 5
-    return df
-
 
 @app.route('/')
 def root():
-    formatted_df = merge_data(shape_df)
-    html_map = generate_map(map_json, formatted_df)
+    shape_df['state_total'] = 7
+    html_map = generate_map(map_json, shape_df)
     return render_template('home.html', data={
         'iframe': html_map
     })
