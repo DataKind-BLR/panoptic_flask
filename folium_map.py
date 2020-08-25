@@ -57,12 +57,11 @@ def generate_map(geojson, data):
         )
 
         state = geojson['features'][i]['properties']['st_nm']
-        auth = geojson['features'][i]['properties']['Authority']
         popup_html = '''
-            <h1>Name: </h1>{}<br />\
-            <h2>Location: </h2>{}<br />\
+            <h1>{}</h1><br />\
+            <h2>Total FRTs: </h2><br />\
             <a target="_blank" href="/state/{}">More Details</a>
-        '''.format(state, auth, state)
+        '''.format(state, state)
         
         popup = folium.IFrame(popup_html, width=200, height=150)
         folium.Popup(popup, max_width=300).add_to(gs)
