@@ -11,7 +11,6 @@ with open('./shape_files/india_gdf.json') as response:
 
 shape_df = gpd.read_file('./shape_files/states_india.shp')
 
-
 def merge_data(df):
 
     df['Count of FRT Systems'] = 0
@@ -57,7 +56,6 @@ def merge_data(df):
     df['Purpose'][14] = 'Security/ Surveillance'
 
     return df
-
 
 '''
 GLOBAL_DATA_HOME = {
