@@ -66,7 +66,7 @@ def get_state_page_data(state:str):
         'total_in_use': frts_in_use,
         'total_not_in_use': frts_not_in_use,
         'financial_outlay_cr': utils._sum_state_financial_outlay(state_frts),
-        "frts": state_frts
+        'frts': state_frts
     }
 
     return result
