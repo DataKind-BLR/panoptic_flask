@@ -41,9 +41,11 @@ def generate_map(map_json, data):
         highlight=True,
     ).add_to(m)
 
-    for key in g._children:
+
+    # hide legend - HACK
+    for key in m._children:
         if key.startswith('color_map'):
-            del(g._children[key])
+            del(m._children[key])
 
     for i in range(len(map_json['features'])):
         gs = folium.GeoJson(
@@ -58,13 +60,13 @@ def generate_map(map_json, data):
 
         state = map_json['features'][i]['properties']['st_nm']
         popup_html = '''
-            <h1>{}</h1><br />\
-            <h2>Total FRTs: </h2><br />\
-            <a target="_blank" href="/state/{}">More Details</a>
+            <h3>{}</h3>\
+            <label>Total FRTs: </label><span>7</span>\
+            <p><a href="www.google.com">More Details</a></p>
         '''.format(state, state)
         
-        popup = folium.IFrame(popup_html, width=200, height=150)
-        folium.Popup(popup, max_width=300).add_to(gs)
+        popup = folium.IFrame(popup_html, width=200, height=120)
+        folium.Popup(popup, max_width=200, parse_html=True).add_to(gs)
         gs.add_to(g)
 
     return m._repr_html_()

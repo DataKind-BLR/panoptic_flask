@@ -1,3 +1,42 @@
+  <footer class="footer">
+    <div class="row">
+      <div class="col-2">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><a href="/">Home</a></li>
+          <li class="list-group-item"><a href="{{ url_for('submit_frt') }}">Submit an FRT</a></li>
+          <li class="list-group-item"><a href="{{ url_for('case_studies') }}">Case Studies</a></li>
+          <li class="list-group-item"><a href="{{ url_for('about') }}">About</a></li>
+        </ul>
+      </div>
+      <div class="col-8">
+        <p>Panoptic</p>
+        <p>
+          <a href="https://internetfreedom.in/">
+            <img style="width: 48px;" src="{{ url_for('static', filename='img/iff_favicon.png') }}" />
+          </a>
+            ♡
+          <a href="https://www.datakind.org/chapters/datakind-blr">
+            <img  src="{{ url_for('static', filename='img/dk_favicon.ico') }}" />
+          </a>
+        </p>
+      </div>
+      <div class="col-2">
+        <p>Internet Freedom Foundation</p>
+        <p>
+          <a target="_blank" href="https://twitter.com/internetfreedom"><i class="fab fa-twitter"></i></a>
+          <a target="_blank" href="https://internetfreedom.in"><i class="fas fa-link"></i></a>
+        </p>
+        <hr />
+        <p>DataKind Bangalore</p>
+        <p>
+          <a target="_blank" href="https://twitter.com/DataKindBLR"><i class="fab fa-twitter"></i></a>
+          <a target="_blank" href="http://www.meetup.com/DataKind-Bangalore"><i class="fab fa-meetup"></i></a>
+          <a target="_blank" href="https://dkblr-slack.herokuapp.com/"><i class="fab fa-slack"></i></a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
   <!-- Bootstrap core JS-->
   <script src="{{ url_for('static', filename='node_modules/jquery/dist/jquery.min.js') }}"></script>
   <script src="{{ url_for('static', filename='node_modules/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
