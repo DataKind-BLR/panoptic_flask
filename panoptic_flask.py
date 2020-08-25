@@ -7,120 +7,31 @@ from model import model
 
 app = Flask(__name__)
 CURR_DIR = os.path.abspath(os.path.dirname(__file__))
-INDIA_GDF = os.path.join(CURR_DIR, 'shape_files/india_gdf.json')
+MAP_JSON = os.path.join(CURR_DIR, 'shape_files/india_gdf.json')
 STATES_INDIA = os.path.join(CURR_DIR, 'shape_files/states_india.shp')
 
-with open(INDIA_GDF) as response:
-    india_gdf = json.load(response)
+with open(MAP_JSON) as response:
+    map_json = json.load(response)
 
 shape_df = gpd.read_file(STATES_INDIA)
 
 def merge_data(df):
     df['Count of FRT Systems'] = 0
-    df['FRT Systems Deployed'] = 'None'
-    df['Authority'] = 'None'
-    df['Place'] = 'None'
-    df['Purpose'] = 'None'
-
-    df['FRT Systems Deployed'][0] = 'TSCOP + CCTNS'
     df['Count of FRT Systems'][0] = 1
-    df['Authority'][0] = 'Hyderabad Police'
-    df['Place'][0] = 'Hyderabad'
-    df['Purpose'][0] = 'Security/ Surveillance'
-
-    df['FRT Systems Deployed'][35] = 'AFRS'
-    df['Count of FRT Systems'][35] = 1
-    df['Authority'][35] = 'Delhi Police'
-    df['Place'][35] = 'Delhi'
-    df['Purpose'][35] = 'Security/ Surveillance'
-
-    df['FRT Systems Deployed'][27] = 'Trinetra'
-    df['Count of FRT Systems'][27] = 1
-    df['Authority'][27] = 'UP Police'
-    df['Place'][27] = 'UP/Lucknow'
-    df['Purpose'][27] = 'Security/ Surveillance'
-
-    df['FRT Systems Deployed'][25] = 'FaceTagr'
-    df['Count of FRT Systems'][25] = 1
-    df['Authority'][25] = 'Chennai Police'
-    df['Place'][25] = 'Chennai'
-    df['Purpose'][25] = 'Security/ Surveillance'
-
-    df['FRT Systems Deployed'][22] = 'Punjab Artificial Intelligence System'
-    df['Count of FRT Systems'][22] = 1
-    df['Authority'][22] = 'Punjab Police'
-    df['Place'][22] = 'Punjab'
-    df['Purpose'][22] = 'Security/ Surveillance'
-
-    df['FRT Systems Deployed'][14] = 'South Western Railways'
-    df['Count of FRT Systems'][14] = 1
-    df['Authority'][14] = 'South Western Railways'
-    df['Place'][14] = 'KSR Bengaluru Station'
-    df['Purpose'][14] = 'Security/ Surveillance'
-
+    df['Count of FRT Systems'][35] = 7
+    df['Count of FRT Systems'][27] = 5
+    df['Count of FRT Systems'][25] = 2
+    df['Count of FRT Systems'][22] = 12
+    df['Count of FRT Systems'][14] = 5
     return df
 
-'''
-HOME_PAGE = {
-    'total_frts': 54,
-    'total_frts_national': 16,
-    'total_frts_states': 38,
-    'total_frts_submitted': 34, # count of FRTs submitted in survey (optional)
-    'states': [{
-          'state': 'Telangana',
-          'state_total': 2
-        }, {
-          'state': 'Andaman & Nicobar Island',
-          'state_total': 0
-        },
-        ...
-    ]
-}
-
-STATE_PAGE = {
-    'name': state,
-    'total_frts': 20,
-    'total_in_use': 17,
-    'total_not_in_use': 3,
-    'financial_outlay_cr': 150,
-    'frts': [{
-        'name': 'Delhi Airport: Digiyatra',
-        'in_use': True,
-        'purpose': 'Authentication of Identity',
-        'report_use_on': 'Sept 2018 onwards',
-        'rti_filed_on': '3rd Dec 2018',
-        'financial_outlay_cr': 3.4,
-        'media_source': 'https://internetfreedom.in/',
-        'rti_response': 'https://internetfreedom.in/'
-    }, {
-        'name': 'Soemthing Else',
-        'in_use': False,
-        'purpose': 'Authentication of Identity',
-        'report_use_on': 'Sept 2018 onwards',
-        'rti_filed_on': '3rd Dec 2018',
-        'financial_outlay_cr': 3.4,
-        'media_source': 'https://internetfreedom.in/',
-        'rti_response': 'https://internetfreedom.in/'
-    }, {
-        'name': 'Another',
-        'in_use': True,
-        'purpose': 'Authentication of Identity',
-        'report_use_on': 'Sept 2018 onwards',
-        'rti_filed_on': '3rd Dec 2018',
-        'financial_outlay_cr': 3.4,
-        'media_source': 'https://internetfreedom.in/',
-        'rti_response': 'https://internetfreedom.in/'
-    }]
-}
-'''
 
 @app.route('/')
 def root():
     formatted_df = merge_data(shape_df)
-    html_map = generate_map(geojson=india_gdf, data=formatted_df)
+    html_map = generate_map(map_json, formatted_df)
     return render_template('home.html', data={
-        'iframe': html_map,
-        'states': formatted_df[['st_nm', 'Count of FRT Systems']].to_dict(orient='records')
+        'iframe': html_map
     })
 
 

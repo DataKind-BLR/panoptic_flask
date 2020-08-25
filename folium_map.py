@@ -1,7 +1,7 @@
 import folium
 import branca
 
-def generate_map(geojson, data):
+def generate_map(map_json, data):
     # Create a white image of 4 pixels, and embed it in a url.
     white_tile = branca.utilities.image_to_url([[1, 1], [1, 1]])
 
@@ -19,8 +19,8 @@ def generate_map(geojson, data):
     )
 
     popup = folium.GeoJsonPopup(
-        fields=['st_nm', 'FRT Systems Deployed', 'Authority', 'Place', 'Purpose'],
-        aliases=['State', 'FRT Systems Deployed', 'Authority', 'Place', 'Purpose'],
+        fields=['st_nm'],
+        aliases=['State'],
         localize=True,
         labels=True,
         style='''
@@ -30,7 +30,7 @@ def generate_map(geojson, data):
     )
 
     g = folium.Choropleth(
-        geo_data=geojson,
+        geo_data=map_json,
         data=data,
         columns=['st_nm', 'Count of FRT Systems'],
         key_on='properties.st_nm',
@@ -45,9 +45,9 @@ def generate_map(geojson, data):
         if key.startswith('color_map'):
             del(g._children[key])
 
-    for i in range(len(geojson['features'])):
+    for i in range(len(map_json['features'])):
         gs = folium.GeoJson(
-            geojson['features'][i],
+            map_json['features'][i],
             style_function=lambda feature: {
                 'fillColor': '#ffff00',
                 'color': 'black',
@@ -56,7 +56,7 @@ def generate_map(geojson, data):
             }
         )
 
-        state = geojson['features'][i]['properties']['st_nm']
+        state = map_json['features'][i]['properties']['st_nm']
         popup_html = '''
             <h1>{}</h1><br />\
             <h2>Total FRTs: </h2><br />\
