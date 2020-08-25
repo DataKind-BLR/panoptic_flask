@@ -3,6 +3,7 @@ from model import DB
 import geopandas as gpd
 from folium_map import generate_map
 from flask import Flask, render_template
+from model import model
 
 app = Flask(__name__)
 
@@ -10,13 +11,6 @@ with open('./shape_files/india_gdf.json') as response:
     india_gdf = json.load(response)
 
 shape_df = gpd.read_file('./shape_files/states_india.shp')
-
-db = DB({
-    'host': 'localhost',
-    'user': 'root',
-    'password': 'admin123',
-    'database': 'panoptic'
-})
 
 def merge_data(df):
     df['Count of FRT Systems'] = 0
@@ -62,7 +56,6 @@ def merge_data(df):
     df['Purpose'][14] = 'Security/ Surveillance'
 
     return df
-
 
 '''
 HOME_PAGE = {
