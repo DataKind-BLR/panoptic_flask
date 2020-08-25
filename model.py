@@ -2,7 +2,6 @@ import os
 import time
 import pickle
 import pandas as pd
-# from json import load
 from mysql import connector
 
 
