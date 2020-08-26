@@ -13,6 +13,9 @@ def _sum_state_financial_outlay(results:dict):
     Returns:
         float -- Returns total financial outlay
     """
+    if results == None:
+        return 0
+
     total_financial_outlay = 0
 
     for result in results:
@@ -31,6 +34,9 @@ def _count_frt_use(results:dict):
         int -- Returns the number of FRTs that are in use
         int -- Returns the number of FRTs that are not in use
     """
+    if results == None:
+        return 0
+
     total_in_use = 0
     total_not_in_use = 0
 
@@ -128,6 +134,9 @@ def _sum_frts(results:dict):
     Returns:
         int -- Total number of FRTs in the nation
     """
+    if results == None:
+        return 0
+
     total_frts = 0
 
     for result in results:
