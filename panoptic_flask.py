@@ -3,7 +3,8 @@ import json
 import geopandas as gpd
 from folium_map import generate_map
 from flask import Flask, render_template
-from model import model
+# from model import model
+# import easy_model
 
 app = Flask(__name__)
 CURR_DIR = os.path.abspath(os.path.dirname(__file__))
