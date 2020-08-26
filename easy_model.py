@@ -29,6 +29,5 @@ def get_state_details(state):
         print('No data exists for ', state)
         return False
     return {
-
         frts: state_df.to_dict(orient='records')
     }
