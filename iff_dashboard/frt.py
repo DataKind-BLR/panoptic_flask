@@ -10,6 +10,7 @@ class Frt:
                  authority,
                  face_recognition_system,
                  jurisdiction,
+                 place,
                  states,
                  upload_status,
                  purpose,
@@ -24,15 +25,17 @@ class Frt:
                  legal_basis,
                  link_govt_sourced,
                  link_media_sourced,
-                 rti_status,
-                 rti_replies,
-                 rti_date):
+                 rti_status = None,
+                 rti_file_date = None,
+                 rti_replies = None,
+                 rti_reply_date  = None):
 
         self.id = _id if _id else random_with_N_digits(8)
         self.authority = authority
+        self.place = place
         self.face_recognition_system = face_recognition_system
         self.jurisdiction = jurisdiction
-        self.states = [state for state in re.sub(' ', '', states).split(',')]
+        self.states = [state for state in states.split(', ') if state]
         self.upload_status = upload_status
         self.purpose = purpose
         self.technology_partner = technology_partner
@@ -40,33 +43,34 @@ class Frt:
         self.reported_use_date = reported_use_date
         self.status = status
         self.linked_databases = linked_databases.rstrip()
-        self.financial_outlay = financial_outlay
+        self.financial_outlay = financial_outlay.replace(',', '') if financial_outlay not in( 'N/A','') else 'NULL'
         self.prescribed_technical_standards = prescribed_technical_standards
         self.storage_duration = storage_duration
         self.legal_basis = legal_basis
         self.link_govt_sourced = link_govt_sourced
         self.link_media_sourced = link_media_sourced
         self.rti_status = rti_status
+        self.rti_file_date = rti_file_date
         self.rti_replies = rti_replies
-        self.rti_date = rti_date
-        self.technology_partner__key = self.get_technology_partner_key(
-            self.technology_partner)
+        self.rti_reply_date = rti_reply_date
+        self.technology_partner__key = self.get_technology_partner_key(self.technology_partner)
 
     def get_technology_partner_key(self, technology_partner):
         cursor = conn.cursor()
         cursor.execute(
             "select id from panoptic.technology_partner where technology_partner = '{}';".format(technology_partner))
-        tech_partner, = cursor.fetchone()
+        tech_partner = cursor.fetchone()
         cursor.close()
 
-        return tech_partner
+        return tech_partner[0] if tech_partner else 'NULL'
 
     def get_place_id(self, state):
 
         cursor = conn.cursor()
         cursor.execute(
             "select id from panoptic.place where state='{}'".format(state))
-        state, = cursor.fetchone()
+        res = cursor.fetchone()
+        state = res[0] if res else None
         cursor.close()
         return state
 
@@ -101,12 +105,59 @@ class Frt:
         db_state_ids = self.get_state_ids()
         gsheets_states = set([self.get_place_id(state)
                               for state in self.states])
-
         for place_id in gsheets_states - db_state_ids:
             self.add_place_id(place_id)
 
         for place_id in db_state_ids - gsheets_states:
             self.delete_place_id(place_id)
+
+    def add_rti_replies(self):
+        query = '''
+                INSERT INTO panoptic.external_links(link, link_type, frt__key)
+                    VALUES('{link}', '{link_type}', '{frt__key}')
+                    ON DUPLICATE KEY UPDATE
+                            link = '{link}',
+                            link_type = '{link_type}',
+                            frt__key = '{frt__key}'            
+        '''.format_map({'link': self.rti_replies,
+                        'link_type': 'RTI Replies',
+                        'frt__key': self.id})
+        insert_cursor = conn.cursor()
+        insert_cursor.execute(query)
+        conn.commit()
+        insert_cursor.close()
+
+    def add_govt_link(self):
+        query = '''
+                INSERT INTO panoptic.external_links(link, link_type, frt__key)
+                    VALUES('{link}', '{link_type}', '{frt__key}')
+                    ON DUPLICATE KEY UPDATE
+                            link = '{link}',
+                            link_type = '{link_type}',
+                            frt__key = '{frt__key}'            
+        '''.format_map({'link': self.link_govt_sourced,
+                        'link_type': 'Govt source',
+                        'frt__key': self.id})
+        insert_cursor = conn.cursor()
+        insert_cursor.execute(query)
+        conn.commit()
+        insert_cursor.close()
+    
+    def add_media_link(self):
+        query = '''
+                INSERT INTO panoptic.external_links(link, link_type, frt__key)
+                    VALUES('{link}', '{link_type}', '{frt__key}')
+                    ON DUPLICATE KEY UPDATE
+                            link = '{link}',
+                            link_type = '{link_type}',
+                            frt__key = '{frt__key}'            
+        '''.format_map({'link': self.link_media_sourced,
+                        'link_type': 'Media source',
+                        'frt__key': self.id})
+        insert_cursor = conn.cursor()
+        insert_cursor.execute(query)
+        conn.commit()
+        insert_cursor.close()
 
     def insert_to_frt_table(self):
         query = '''INSERT INTO \
@@ -120,11 +171,13 @@ class Frt:
                                     financial_outlay,\
                                     prescribed_technical_standards,\
                                     storage_duration, \
-                                    legal_basis, tender_publication_date,rti_date,reported_use)\
+                                    legal_basis, tender_publication_date,rti_date,reported_use, jurisdiction,\
+                                    rti_status, rti_reply_date)\
                         VALUES\
                         	({id},'{authority}','{face_recognition_system}','{purpose}',{technology_partner__key}, \
-                        	'{status}','{linked_databases}','{financial_outlay}','{prescribed_technical_standards}', \
-                        	'{storage_duration}', '{legal_basis}','{tender_publication_date}', '{rti_date}','{reported_use}')
+                        	'{status}','{linked_databases}',{financial_outlay},'{prescribed_technical_standards}', \
+                        	'{storage_duration}', '{legal_basis}','{tender_publication_date}', {rti_date},'{reported_use}', 
+                            '{jurisdiction}', '{rti_status}', {rti_reply_date})
                          ON DUPLICATE KEY UPDATE
                             id = {id},
                             authority = '{authority}',
@@ -133,13 +186,16 @@ class Frt:
                             technology_partner__key = {technology_partner__key},
                             status = '{status}',
                             linked_databases = '{linked_databases}',
-                            financial_outlay = '{financial_outlay}',
+                            financial_outlay = {financial_outlay},
                             prescribed_technical_standards = '{prescribed_technical_standards}',
                             storage_duration = '{storage_duration}',
                             legal_basis = '{legal_basis}',
                             tender_publication_date = '{tender_publication_date}',
-                            rti_date = '{rti_date}',
-                            reported_use = '{reported_use}' 
+                            rti_date = {rti_date},
+                            reported_use = '{reported_use}',
+                            jurisdiction = '{jurisdiction}',
+                            rti_status = '{rti_status}',
+                            rti_reply_date = {rti_reply_date}
                          '''.format_map({'id': self.id,
                                          'authority': self.authority,
                                          'face_recognition_system': self.face_recognition_system,
@@ -152,10 +208,13 @@ class Frt:
                                          'storage_duration': self.storage_duration,
                                          'legal_basis': self.legal_basis,
                                          'tender_publication_date': self.tender_publication_date,
-                                         'rti_date': self.rti_date,
-                                         'reported_use': self.reported_use_date
-                                         })
+                                         'rti_date': "'{}'".format(self.rti_file_date) if self.rti_file_date else 'NULL',
+                                         'reported_use': self.reported_use_date,
+                                         'jurisdiction': self.jurisdiction,
+                                         'rti_status': self.rti_status,
+                                         'rti_reply_date': "'{}'".format(self.rti_reply_date) if self.rti_reply_date else 'NULL'
 
+                                         })
         insert_cursor = conn.cursor()
         insert_cursor.execute(query)
         conn.commit()
