@@ -19,7 +19,8 @@ def _sum_state_financial_outlay(results:dict):
     total_financial_outlay = 0
 
     for result in results:
-        total_financial_outlay += result['financial_outlay_cr']
+        if result['financial_outlay_cr']:
+            total_financial_outlay += result['financial_outlay_cr']
 
     return total_financial_outlay
 
@@ -111,18 +112,48 @@ def get_state_frts(state:str):
     return results
 
 
-def _count_frt_type(results:dict):
+def get_count_frt_jurisdiction():
     """
     Get FRT types deployed
 
     Arguments:
-        results {dict} -- Result set from `get_total_frts`
     Returns:
         int -- Returns the number of FRTs that are national
         int -- Returns the number of FRTs that are state level
     """
 
-    pass
+    query = """
+        SELECT
+            COUNT(
+                DISTINCT(
+                    CASE
+                        WHEN
+                            frt.jurisdiction = 'State' THEN frt.id
+                        ELSE NULL
+                    END
+                )
+            ) AS state_frt
+            , COUNT(
+                DISTINCT(
+                    CASE
+                        WHEN
+                            frt.jurisdiction = 'Central' THEN frt.id
+                        ELSE NULL
+                    END
+                )
+            ) AS central_frt
+        FROM
+            panoptic.frt AS frt
+    """
+
+    headers, data = execute_select_query(query)
+
+    if headers and data:
+        results = dict(zip(headers, data.pop()))
+        return results['state_frt'], results['central_frt']
+
+    return 0, 0
+
 
 
 def _sum_frts(results:dict):
@@ -140,7 +171,8 @@ def _sum_frts(results:dict):
     total_frts = 0
 
     for result in results:
-        total_frts += result['state_total']
+        if result['state_total']:
+            total_frts += result['state_total']
 
     return total_frts
 
@@ -150,7 +182,6 @@ def get_total_frts():
     Get total number of FRTs for a single state.
 
     Arguments:
-        state {str} -- Name of the state.
     Returns:
         {JSON} -- Returns headers of the columns and data in list
     """

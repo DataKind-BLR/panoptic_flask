@@ -18,11 +18,12 @@ def get_home_page_data():
     """
 
     total_frts = utils.get_total_frts()
+    total_frts_states, total_frts_national = utils.get_count_frt_jurisdiction()
 
     result = {
         'total_frts': utils._sum_frts(total_frts),
-        'total_frts_national': 0,
-        'total_frts_states': 0,
+        'total_frts_national': total_frts_states,
+        'total_frts_states': total_frts_national,
         'states': total_frts
     }
 
