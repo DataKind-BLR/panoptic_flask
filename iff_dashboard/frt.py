@@ -43,7 +43,7 @@ class Frt:
         self.reported_use_date = reported_use_date
         self.status = status
         self.linked_databases = linked_databases.rstrip()
-        self.financial_outlay = financial_outlay.replace(',', '') if financial_outlay not in( 'N/A','') else 'NULL'
+        self.financial_outlay = financial_outlay.replace(',', '') if financial_outlay else 'NULL'
         self.prescribed_technical_standards = prescribed_technical_standards
         self.storage_duration = storage_duration
         self.legal_basis = legal_basis
@@ -112,52 +112,56 @@ class Frt:
             self.delete_place_id(place_id)
 
     def add_rti_replies(self):
-        query = '''
-                INSERT INTO panoptic.external_links(link, link_type, frt__key)
-                    VALUES('{link}', '{link_type}', '{frt__key}')
-                    ON DUPLICATE KEY UPDATE
-                            link = '{link}',
-                            link_type = '{link_type}',
-                            frt__key = '{frt__key}'            
-        '''.format_map({'link': self.rti_replies,
-                        'link_type': 'RTI Replies',
-                        'frt__key': self.id})
-        insert_cursor = conn.cursor()
-        insert_cursor.execute(query)
-        conn.commit()
-        insert_cursor.close()
+        if self.rti_replies:
+            query = '''
+                    INSERT INTO panoptic.external_links(link, link_type, frt__key)
+                    SELECT link, link_type, frt__key from panoptic.external_links
+                    where NOT EXISTS (SELECT link, link_type, frt__key from panoptic.external_links 
+                                        WHERE frt__key = '{frt__key}'  
+                                        AND link_type = '{link_type}'
+                                        AND link = '{link}')
+            '''.format_map({'link': self.rti_replies,
+                            'link_type': 'RTI Replies',
+                            'frt__key': self.id})
+            print(query)
+            insert_cursor = conn.cursor()
+            insert_cursor.execute(query)
+            conn.commit()
+            insert_cursor.close()
 
     def add_govt_link(self):
-        query = '''
-                INSERT INTO panoptic.external_links(link, link_type, frt__key)
-                    VALUES('{link}', '{link_type}', '{frt__key}')
-                    ON DUPLICATE KEY UPDATE
-                            link = '{link}',
-                            link_type = '{link_type}',
-                            frt__key = '{frt__key}'            
-        '''.format_map({'link': self.link_govt_sourced,
-                        'link_type': 'Govt source',
-                        'frt__key': self.id})
-        insert_cursor = conn.cursor()
-        insert_cursor.execute(query)
-        conn.commit()
-        insert_cursor.close()
+        if self.link_govt_sourced:
+            query = '''
+                    INSERT INTO panoptic.external_links(link, link_type, frt__key)
+                    SELECT link, link_type, frt__key from panoptic.external_links
+                    where NOT EXISTS (SELECT link, link_type, frt__key from panoptic.external_links 
+                                        WHERE frt__key = '{frt__key}'  
+                                        AND link_type = '{link_type}'
+                                        AND link = '{link}')
+            '''.format_map({'link': self.link_govt_sourced,
+                            'link_type': 'Govt Source',
+                            'frt__key': self.id})
+            insert_cursor = conn.cursor()
+            insert_cursor.execute(query)
+            conn.commit()
+            insert_cursor.close()
     
     def add_media_link(self):
-        query = '''
-                INSERT INTO panoptic.external_links(link, link_type, frt__key)
-                    VALUES('{link}', '{link_type}', '{frt__key}')
-                    ON DUPLICATE KEY UPDATE
-                            link = '{link}',
-                            link_type = '{link_type}',
-                            frt__key = '{frt__key}'            
-        '''.format_map({'link': self.link_media_sourced,
-                        'link_type': 'Media source',
-                        'frt__key': self.id})
-        insert_cursor = conn.cursor()
-        insert_cursor.execute(query)
-        conn.commit()
-        insert_cursor.close()
+        if self.link_media_sourced:
+            query = '''
+                    INSERT INTO panoptic.external_links(link, link_type, frt__key)
+                    SELECT link, link_type, frt__key from panoptic.external_links
+                    where NOT EXISTS (SELECT link, link_type, frt__key from panoptic.external_links 
+                                        WHERE frt__key = '{frt__key}'  
+                                        AND link_type = '{link_type}'
+                                        AND link = '{link}')
+            '''.format_map({'link': self.rti_replies,
+                            'link_type': 'Media Source',
+                            'frt__key': self.id})
+            insert_cursor = conn.cursor()
+            insert_cursor.execute(query)
+            conn.commit()
+            insert_cursor.close()
 
     def insert_to_frt_table(self):
         query = '''INSERT INTO \

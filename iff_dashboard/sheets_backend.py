@@ -21,7 +21,6 @@ def update_frts(spreadsheet):
             frt.add_media_link()
     #         gs_cells.append(Cell(i, 1, value=frt.id))
     #         gs_cells.append(Cell(i, 6, value=ACCEPT_MESSAGE))
-
     # if gs_cells:
     #     frt_sheet.update_cells(gs_cells)
 
