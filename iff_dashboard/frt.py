@@ -115,7 +115,7 @@ class Frt:
         if self.rti_replies:
             query = '''
                     INSERT INTO panoptic.external_links(link, link_type, frt__key)
-                    SELECT link, link_type, frt__key from panoptic.external_links
+                    SELECT * FROM (SELECT '{link}', '{link_type}', {frt__key}) AS tmp
                     where NOT EXISTS (SELECT link, link_type, frt__key from panoptic.external_links 
                                         WHERE frt__key = '{frt__key}'  
                                         AND link_type = '{link_type}'
@@ -133,7 +133,7 @@ class Frt:
         if self.link_govt_sourced:
             query = '''
                     INSERT INTO panoptic.external_links(link, link_type, frt__key)
-                    SELECT link, link_type, frt__key from panoptic.external_links
+                    SELECT * FROM (SELECT '{link}', '{link_type}', {frt__key}) AS tmp
                     where NOT EXISTS (SELECT link, link_type, frt__key from panoptic.external_links 
                                         WHERE frt__key = '{frt__key}'  
                                         AND link_type = '{link_type}'
@@ -150,7 +150,7 @@ class Frt:
         if self.link_media_sourced:
             query = '''
                     INSERT INTO panoptic.external_links(link, link_type, frt__key)
-                    SELECT link, link_type, frt__key from panoptic.external_links
+                    SELECT * FROM (SELECT '{link}', '{link_type}', {frt__key}) AS tmp
                     where NOT EXISTS (SELECT link, link_type, frt__key from panoptic.external_links 
                                         WHERE frt__key = '{frt__key}'  
                                         AND link_type = '{link_type}'
