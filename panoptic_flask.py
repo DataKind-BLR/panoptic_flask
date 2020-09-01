@@ -15,6 +15,11 @@ with open(MAP_JSON) as response:
 
 shape_df = gpd.read_file(STATES_INDIA)
 
+print(model.get_home_page_data())
+print('----------------------------')
+import pdb
+pdb.set_trace()
+
 
 @app.route('/')
 def root():
@@ -64,12 +69,6 @@ def get_frts(state):
         }]
     }
     return render_template('state.html', state=state_data)
-
-
-def total_frts(state='India'):
-    if state == 'India':
-        return main_df.count()
-    return main_df.groupby(state).count()
 
 
 @app.route('/submit_frt')
