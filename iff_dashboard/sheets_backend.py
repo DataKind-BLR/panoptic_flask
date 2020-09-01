@@ -8,8 +8,7 @@ from tech_partner import TechPartner
 
 def update_frts(spreadsheet):
     frt_sheet = spreadsheet.get_worksheet(0)
-    update_list = frt_sheet.col_values(6)
-    print(update_list)
+    update_list = frt_sheet.col_values(7)
     gs_cells = []
     for i, update_status in enumerate(update_list, 1):
         if update_status == SUBMIT_MESSAGE:
@@ -17,27 +16,29 @@ def update_frts(spreadsheet):
             frt = Frt(*values_list)
             frt.insert_to_frt_table()
             frt.update_frt_place_table()
-            gs_cells.append(Cell(i, 1, value=frt.id))
-            gs_cells.append(Cell(i, 6, value=ACCEPT_MESSAGE))
-
-    if gs_cells:
-        frt_sheet.update_cells(gs_cells)
+            frt.add_rti_replies()
+            frt.add_govt_link()
+            frt.add_media_link()
+    #         gs_cells.append(Cell(i, 1, value=frt.id))
+    #         gs_cells.append(Cell(i, 6, value=ACCEPT_MESSAGE))
+    # if gs_cells:
+    #     frt_sheet.update_cells(gs_cells)
 
 
 def update_tech_partner(spreadsheet):
     tp_sheet = spreadsheet.get_worksheet(1)
-    update_list = tp_sheet.col_values(4)
+    update_list = tp_sheet.col_values(5)
     gs_cells = []
     for i, update_status in enumerate(update_list, 1):
         if update_status == SUBMIT_MESSAGE:
             values_list = tp_sheet.row_values(i)
             tech_partner = TechPartner(*values_list)
             tech_partner.insert_to_tech_partners()
-            gs_cells.append(Cell(i, 1, value=tech_partner.id))
-            gs_cells.append(Cell(i, 4, value=ACCEPT_MESSAGE))
+    #         gs_cells.append(Cell(i, 1, value=tech_partner.id))
+    #         gs_cells.append(Cell(i, 4, value=ACCEPT_MESSAGE))
 
-    if gs_cells:
-        tp_sheet.update_cells(gs_cells)
+    # if gs_cells:
+    #     tp_sheet.update_cells(gs_cells)
 
 
 def update_location_table(spreadsheet):

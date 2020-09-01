@@ -6,7 +6,8 @@ from flask import Flask, render_template
 from model import model
 
 app = Flask(__name__)
-CURR_DIR = os.path.abspath(os.path.dirname(__file__))
+#CURR_DIR = os.path.abspath(os.path.dirname(__file__))
+CURR_DIR='/var/www/panoptic_flask/panoptic_flask'
 MAP_JSON = os.path.join(CURR_DIR, 'shape_files/india_gdf.json')
 STATES_INDIA = os.path.join(CURR_DIR, 'shape_files/states_india.shp')
 
