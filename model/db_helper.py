@@ -44,14 +44,10 @@ def execute_select_query(query, cache_filename=None):
     # Cache too old, run query
     if regen:
         conn = connector.connect(
-            # host=os.environ.get('MYSQL_HOST', 'localhost'),
-            # user=os.environ.get('MYSQL_USERNAME'),
-            # password=os.environ.get('MYSQL_PASSWORD'),
-            # database=os.environ.get('MYSQL_DATABASE')
-            host='localhost',
-            user='root',
-            password='admin123',
-            database='panoptic'
+            host=os.environ.get('MYSQL_HOST', 'localhost'),
+            user=os.environ.get('MYSQL_USERNAME', 'root'),
+            password=os.environ.get('MYSQL_PASSWORD', 'admin123'),
+            database=os.environ.get('MYSQL_DATABASE', 'panoptic')
         )
         cursor = conn.cursor()
         cursor.execute(query)
