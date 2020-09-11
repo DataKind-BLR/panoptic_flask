@@ -1,12 +1,19 @@
 """DB connector for accesing database"""	
 import os
 import time
+import yaml
 import pickle
-from json import load
 from mysql import connector
 
 # 20 minutes cache age
 MAX_CACHE_AGE = 60*20
+
+CURR_DIR = os.path.abspath(os.path.dirname(__file__))
+CREDENTIALS_YAML = os.path.join(CURR_DIR, '../credentials.yaml')
+
+file_credentails = open(CREDENTIALS_YAML)
+CREDENTIALS = yaml.load(file_credentails, Loader=yaml.FullLoader)
+
 
 def execute_select_query(query, cache_filename=None):
     '''
@@ -44,10 +51,10 @@ def execute_select_query(query, cache_filename=None):
     # Cache too old, run query
     if regen:
         conn = connector.connect(
-            host=os.environ.get('MYSQL_HOST', 'localhost'),
-            user=os.environ.get('MYSQL_USERNAME'),
-            password=os.environ.get('MYSQL_PASSWORD'),
-            database=os.environ.get('MYSQL_DATABASE')
+            host=CREDENTIALS['MYSQL_HOST'],
+            user=CREDENTIALS['MYSQL_USERNAME'],
+            password=CREDENTIALS['MYSQL_PASSWORD'],
+            database=CREDENTIALS['MYSQL_DATABASE']
         )
         cursor = conn.cursor()
         cursor.execute(query)
