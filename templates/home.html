@@ -29,10 +29,10 @@
             </tr>
           </thead>
           <tbody>
-          {% for state in data['states'] %}
+          {% for s in data['totals']['states'] %}
             <tr>
-              <th>{{ state['st_nm'] }}</th>
-              <td>{{ state['state_total'] }}</td>
+              <th>{{ s['state'] }}</th>
+              <td>{{ s['state_total'] }}</td>
             </tr>
           {% endfor %}
           </tbody>
@@ -43,6 +43,7 @@
 </section>
 
 <section class="page-section" id="frt-systems">
+  {{ states }}
   <div class="container">
     <div class="text-center">
       <h2 class="section-heading text-uppercase">FRT Systems in India</h2>
@@ -50,21 +51,21 @@
     <div class="row text-center">
       <div class="col-md-4">
         <span class="fa-stack fa-4x">
-          <span>54</span>
+          <span>{{ data['totals']['total_frts'] }}</span>
         </span>
         <h4 class="my-3">Total FRT Systems</h4>
         <p class="text-muted">lorem impsum</p>
       </div>
       <div class="col-md-4">
         <span class="fa-stack fa-4x">
-          <span>16</span>
+          <span>{{ data['totals']['total_frts_national'] }}</span>
         </span>
         <h4 class="my-3">National FRT Systems</h4>
         <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
       </div>
       <div class="col-md-4">
         <span class="fa-stack fa-4x">
-          <span>38</span>
+          <span>{{ data['totals']['total_frts_states'] }}</span>
         </span>
         <h4 class="my-3">State-wise FRT Systems</h4>
         <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>

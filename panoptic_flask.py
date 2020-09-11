@@ -1,13 +1,13 @@
 import os
 import json
+import pandas as pd
 import geopandas as gpd
 from folium_map import generate_map
 from flask import Flask, render_template
 from model import model
 
 app = Flask(__name__)
-#CURR_DIR = os.path.abspath(os.path.dirname(__file__))
-CURR_DIR='/var/www/panoptic_flask/panoptic_flask'
+CURR_DIR = os.path.abspath(os.path.dirname(__file__))
 MAP_JSON = os.path.join(CURR_DIR, 'shape_files/india_gdf.json')
 STATES_INDIA = os.path.join(CURR_DIR, 'shape_files/states_india.shp')
 
@@ -16,14 +16,16 @@ with open(MAP_JSON) as response:
 
 shape_df = gpd.read_file(STATES_INDIA)
 
-
 @app.route('/')
 def root():
-    shape_df['state_total'] = 7         # SAMPLE ALL STATES = 7
-    html_map = generate_map(map_json, shape_df)
+    home_data = model.get_home_page_data()
+    states_df = pd.DataFrame(home_data['states'])
+    merged_df = shape_df.merge(states_df, left_on='st_nm', right_on='state')
+
+    html_map = generate_map(map_json, merged_df)
     return render_template('home.html', data={
         'iframe': html_map,
-        'states': shape_df[['st_nm', 'state_total']].to_dict(orient='records')
+        'totals': home_data
     })
 
 
@@ -65,12 +67,6 @@ def get_frts(state):
         }]
     }
     return render_template('state.html', state=state_data)
-
-
-def total_frts(state='India'):
-    if state == 'India':
-        return main_df.count()
-    return main_df.groupby(state).count()
 
 
 @app.route('/submit_frt')

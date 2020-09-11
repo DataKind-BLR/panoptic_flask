@@ -1,5 +1,6 @@
 import folium
 import branca
+import pandas as pd
 
 def generate_map(map_json, data):
     # Create a white image of 4 pixels, and embed it in a url.
@@ -59,11 +60,12 @@ def generate_map(map_json, data):
         )
 
         state = map_json['features'][i]['properties']['st_nm']
+        frt_count = data[data['state'] == state]['state_total'].iloc[0]
         popup_html = '''
             <h3>{}</h3>\
-            <label>Total FRTs: </label><span>7</span>\
+            <label>Total FRTs: </label><span>{}</span>\
             <p><a href="www.google.com">More Details</a></p>
-        '''.format(state, state)
+        '''.format(state, frt_count)
         
         popup = folium.IFrame(popup_html, width=200, height=120)
         folium.Popup(popup, max_width=200, parse_html=True).add_to(gs)
