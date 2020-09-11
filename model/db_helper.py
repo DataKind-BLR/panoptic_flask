@@ -45,9 +45,9 @@ def execute_select_query(query, cache_filename=None):
     if regen:
         conn = connector.connect(
             host=os.environ.get('MYSQL_HOST', 'localhost'),
-            user=os.environ.get('MYSQL_USERNAME', 'root'),
-            password=os.environ.get('MYSQL_PASSWORD', 'admin123'),
-            database=os.environ.get('MYSQL_DATABASE', 'panoptic')
+            user=os.environ.get('MYSQL_USERNAME'),
+            password=os.environ.get('MYSQL_PASSWORD'),
+            database=os.environ.get('MYSQL_DATABASE')
         )
         cursor = conn.cursor()
         cursor.execute(query)
