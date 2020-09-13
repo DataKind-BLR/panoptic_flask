@@ -2,8 +2,10 @@
 static/node_modules/
 db/
 
-# Files
+# Panoptic Specific Files
 credentials.yaml
+iff_dashboard/config.py
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -87,7 +89,6 @@ target/
 # IPython
 profile_default/
 ipython_config.py
-iff_dashboard/config.py
 # pyenv
 .python-version
 
