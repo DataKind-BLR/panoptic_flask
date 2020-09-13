@@ -11,25 +11,25 @@
     <div class="row text-center">
       <div class="col-md-3 col-sm-12">
         <span class="fa-stack fa-4x">
-          <span>54</span>
+          <span>{{ state['total_frts'] }}</span>
         </span>
         <h4 class="my-3">Total FRT Systems</h4>
       </div>
       <div class="col-md-3 col-sm-12">
         <span class="fa-stack fa-4x">
-          <span>16 Cr</span>
+          <span>{{ state['financial_outlay_cr'] }} Cr</span>
         </span>
         <h4 class="my-3">Finacial Outlay</h4>
       </div>
       <div class="col-md-3 col-sm-12">
         <span class="fa-stack fa-4x">
-          <span>17</span>
+          <span>{{ state['total_in_use'] }}</span>
         </span>
         <h4 class="my-3">In Use</h4>
       </div>
       <div class="col-md-3 col-sm-12">
         <span class="fa-stack fa-4x">
-          <span>3</span>
+          <span>{{ state['total_not_in_use'] }}</span>
         </span>
         <h4 class="my-3">Not In Use</h4>
       </div>
@@ -51,10 +51,10 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">{{ frt['name'] }}</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">RTI Replies</a>
-              <a href="#" class="card-link">Media Source</a>
+              <h6 class="card-subtitle mb-2 text-muted">Purpose: {{ state['purpose'] }}</h6>
+              <p class="card-text"></p>
+              <a href="#" class="card-link" target="_blank">RTI Replies</a>
+              <a href="{{ frt['media_source'] }}" target="_blank" class="card-link">Media Source</a>
             </div>
           </div>
         </div>
