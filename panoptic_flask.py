@@ -21,7 +21,6 @@ def root():
     home_data = model.get_home_page_data()
     states_df = pd.DataFrame(home_data['states'])
     merged_df = shape_df.merge(states_df, left_on='st_nm', right_on='state')
-
     html_map = generate_map(map_json, merged_df)
     return render_template('home.html', data={
         'iframe': html_map,
