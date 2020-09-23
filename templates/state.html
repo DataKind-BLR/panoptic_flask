@@ -38,32 +38,33 @@
 </section>
 
 
-<section class="page-section">
-  <div class="container">
-    <div class="text-center">
-      <h4 class="section-heading text-uppercase">FRT Systems in {{ state['name'] }}</h4>
-    </div>
+{% if state['total_frts'] >= 1: %}
+  <section class="page-section">
+    <div class="container">
+      <div class="text-center">
+        <h4 class="section-heading text-uppercase">FRT Systems in {{ state['name'] }}</h4>
+      </div>
 
-    <div class="row">
-
-      {% for frt in state['frts'] %}
-        <div class="col-md-6 col-sm-12 my-3">      
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">{{ frt['name'] }}</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Purpose: {{ frt['purpose'] }}</h6>
-              <p class="card-text">Report Use On: {{ frt['report_use_on'] }}</p>
-              {% if frt['rti_filed_on']: %}
-                <p class="card-text">RTI Filed On: {{ frt['rti_filed_on'].strftime('%B %Y') }}</p>
-              {% endif %}
-              <a href="{{ frt['media_source'] }}" target="_blank" class="card-link">View Media Source</a>
+      <div class="row">
+          {% for frt in state['frts'] %}
+            <div class="col-md-6 col-sm-12 my-3">      
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">{{ frt['name'] }}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">Purpose: {{ frt['purpose'] }}</h6>
+                  <p class="card-text">Report Use On: {{ frt['report_use_on'] }}</p>
+                  {% if frt['rti_filed_on']: %}
+                    <p class="card-text">RTI Filed On: {{ frt['rti_filed_on'].strftime('%B %Y') }}</p>
+                  {% endif %}
+                  <a href="{{ frt['media_source'] }}" target="_blank" class="card-link">View Media Source</a>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      {% endfor %}
+          {% endfor %}
+    </div>
+  </section>
+{% endif %}
 
-  </div>
-</section>
 
 <!-- DO NOT ADD ANYTHING BELOW THIS LINE -->
 {% endblock %}
