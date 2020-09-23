@@ -53,7 +53,9 @@
               <h5 class="card-title">{{ frt['name'] }}</h5>
               <h6 class="card-subtitle mb-2 text-muted">Purpose: {{ frt['purpose'] }}</h6>
               <p class="card-text">Report Use On: {{ frt['report_use_on'] }}</p>
-              <p class="card-text">RTI Filed On: {{ frt['rti_filed_on'].strftime('%B %Y') }}</p>
+              {% if frt['rti_filed_on']: %}
+                <p class="card-text">RTI Filed On: {{ frt['rti_filed_on'].strftime('%B %Y') }}</p>
+              {% endif %}
               <a href="{{ frt['media_source'] }}" target="_blank" class="card-link">View Media Source</a>
             </div>
           </div>
