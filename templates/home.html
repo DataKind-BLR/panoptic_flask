@@ -31,7 +31,7 @@
           <tbody>
           {% for s in data['totals']['states'] %}
             <tr>
-              <th>{{ s['state'] }}</th>
+              <th><a href="{{ url_for('get_frts', state=s['state']) }}">{{ s['state'] }}</a></th>
               <td>{{ s['state_total'] }}</td>
             </tr>
           {% endfor %}
