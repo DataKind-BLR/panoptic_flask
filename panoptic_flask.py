@@ -34,16 +34,6 @@ def get_frts(state):
     return render_template('state.html', state=state_data)
 
 
-@app.route('/submit_frt')
-def submit_frt():
-    return render_template('submit_frt.html')
-
-
-@app.route('/case_studies')
-def case_studies():
-    return render_template('case_studies.html')
-
-
 @app.route('/about')
 def about():
     return render_template('about.html')

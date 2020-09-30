@@ -4,7 +4,7 @@ import pandas as pd
 
 def generate_map(map_json, data):
     # Create a white image of 4 pixels, and embed it in a url.
-    white_tile = branca.utilities.image_to_url([[1, 1], [1, 1]])
+    # white_tile = branca.utilities.image_to_url([[1, 1], [1, 1]])
 
     m = folium.Map(
         [23.53, 78.3],
@@ -14,8 +14,8 @@ def generate_map(map_json, data):
         zoom_start=5,
         scrollWheelZoom=True,
         maxBounds=[[40, 68],[6, 97]],
-        tiles=white_tile,
-        attr='white tile',
+        # tiles=white_tile,
+        # attr='white tile',
         dragging=True
     )
 
@@ -63,8 +63,7 @@ def generate_map(map_json, data):
         frt_count = data[data['state'] == state]['state_total'].iloc[0]
         popup_html = '''
             <h3>{}</h3>\
-            <label>Total FRTs: </label><span>{}</span>\
-            <p><a href="www.google.com">More Details</a></p>
+            <label>Total FRTs: </label><span>{}</span>
         '''.format(state, frt_count)
         
         popup = folium.IFrame(popup_html, width=200, height=120)
