@@ -1,5 +1,18 @@
 # Steup Instructions
 
+## Credential File Locations
+
+File locations for the following files
+
+* `credentials.yaml`         - should be present in the root directory
+* `iff_gsheets_config.json`  - should be present inside the `iff_dashboard` folder
+
+You can change the following values in the `credentials.yaml` file
+
+* `MYSQL_USERNAME`
+* `MYSQL_PASSWORD`
+* `MYSQL_DATABASE`
+
 ## Database Setup
 
 Database name is `panoptic` & the credentials are as per your local system
@@ -8,21 +21,9 @@ Database name is `panoptic` & the credentials are as per your local system
 mysql -u root -p panoptic < sql_dump.sql
 ```
 
-Create a `credentials.yaml` file in your root directory with the following structure.
-
-Replace the necessary content in the yaml file, without any quotation.
-
-```yaml
-# MySQL
-MYSQL_HOST: localhost
-MYSQL_USERNAME: <root> 		# Enter DB username
-MYSQL_PASSWORD: <root> 		# Enter DB password
-MYSQL_DATABASE: <panoptic>  # Enter DB name
-MYSQL_PORT: 3306 			# Default MySQL port
-```
-
-
 ## NPM Dependencies
+
+Install the node module dependencies inside the `static` folder
 
 ```bash
 cd static
