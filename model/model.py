@@ -1,5 +1,4 @@
-"""Model file for accessing the base functions"""
-from backend import utils
+from model import utils
 
 def get_home_page_data():
     """
