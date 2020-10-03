@@ -1,8 +1,4 @@
-import os
-import logging
-from mysql import connector
-from model.db_helper import execute_select_query
-
+from backend.db_helper import execute_select_query
 
 def _sum_state_financial_outlay(results:dict):
     """
