@@ -4,7 +4,11 @@ import re
 
 
 class Frt:
-
+    '''
+    The class FRT has all the attributes of a FRT and the methods to update,add and
+    delete the changes from the spreadsheet.
+    
+    '''
     def __init__(self,
                  _id,
                  authority,
@@ -223,3 +227,28 @@ class Frt:
         insert_cursor.execute(query)
         conn.commit()
         insert_cursor.close()
+
+    
+    def delete_frt(self):
+        query = ''' 
+            DELETE FROM  panoptic.frt_place_link WHERE frt__key = {frt_key}
+            '''.format_map({'frt_key': self.id})
+
+        query1 = ''' 
+            DELETE FROM  panoptic.external_links WHERE frt__key = {frt_key}
+            '''.format_map({'frt_key': self.id})
+
+        query2 = ''' 
+            DELETE FROM  panoptic.frt WHERE id = {frt_key}
+            '''.format_map({'frt_key': self.id})
+
+        delete_cursor = conn.cursor()
+        delete_cursor.execute(query)
+        delete_cursor.execute(query1)
+        delete_cursor.execute(query2)
+        conn.commit()
+        delete_cursor.close()
+        
+        
+        
+
