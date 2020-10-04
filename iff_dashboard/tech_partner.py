@@ -3,7 +3,11 @@ from config import conn
 
 
 class TechPartner():
+    '''
+    The class TechPartner has all the attributes of a tech partner i.e the name,
+    website and roc_details from the spreadsheet.
 
+    '''
     def __init__(self, _id, technology_partner, website, roc_details, upload_status):
         self.id = _id if _id else random_with_N_digits(8)
         self.technology_partner = technology_partner
@@ -12,7 +16,9 @@ class TechPartner():
         self.roc_details = roc_details
 
     def insert_to_tech_partners(self):
-
+        ''''
+        Method to insert the techpartner into the database.
+        '''
         query = ''' INSERT INTO
                         panoptic.technology_partner (
                             id, technology_partner, website, roc_details)
