@@ -1,5 +1,6 @@
 from model import utils
 
+
 def get_home_page_data():
     """
     Get home page data to display in the map.
@@ -28,7 +29,7 @@ def get_home_page_data():
     return result
 
 
-def get_state_page_data(state:str):
+def get_state_page_data(state: str):
     """
     Arguments:
         state {str} -- Name of the state.
@@ -53,7 +54,7 @@ def get_state_page_data(state:str):
         }
     """
 
-    if 'state' == None:
+    if 'state' is None:
         return None
 
     state_frts = utils.get_state_frts(state=state)

@@ -16,6 +16,7 @@ with open(MAP_JSON) as response:
 
 shape_df = gpd.read_file(STATES_INDIA)
 
+
 @app.route('/')
 def root():
     home_data = model.get_home_page_data()

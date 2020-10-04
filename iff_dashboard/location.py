@@ -2,6 +2,7 @@ from config import conn
 
 
 class Location():
+
     def __init__(self, _id, state):
         self.id = _id
         self.state = state

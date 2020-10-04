@@ -136,7 +136,6 @@ def get_state_frts(state: str):
         state=state
     )
 
-
     headers, data = execute_select_query(query)
 
     results = []
@@ -187,7 +186,6 @@ def get_count_frt_jurisdiction():
         return results['state_frt'], results['central_frt']
 
     return 0, 0
-
 
 
 def _sum_frts(results: dict):

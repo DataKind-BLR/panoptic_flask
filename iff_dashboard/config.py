@@ -17,13 +17,7 @@ DB_PASSWORD = CREDENTIALS['MYSQL_PASSWORD']
 ACCEPT_MESSAGE = CREDENTIALS['ACCEPT_MESSAGE']
 REJECT_MESSAGE = CREDENTIALS['REJECT_MESSAGE']
 SUBMIT_MESSAGE = CREDENTIALS['SUBMIT_MESSAGE']
-
-# Setup Connection
-def connection():
-    conn = mysql.connector.connect(
-        user=DB_USER,
-        password=DB_PASSWORD
-    )
-    return conn
-
-conn = connection()
+conn = mysql.connector.connect(
+    user=DB_USER,
+    password=DB_PASSWORD
+)
