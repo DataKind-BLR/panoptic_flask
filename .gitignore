@@ -4,7 +4,7 @@ db/
 
 # Panoptic Specific Files
 credentials.yaml
-iff_dashboard/config.py
+iff_dashboard/iff_gsheets_config.json
 
 
 # Byte-compiled / optimized / DLL files
